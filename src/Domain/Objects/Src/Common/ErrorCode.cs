@@ -3,6 +3,7 @@
     public enum ErrorCode
     {
         None,
-        NotFound
+        NotFound,
+        TaskArchived,
     }
 }

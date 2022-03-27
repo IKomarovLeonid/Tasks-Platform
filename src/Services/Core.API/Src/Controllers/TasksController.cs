@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Core.API.Mapping;
 using Core.API.View;
 using Core.API.View.Tasks;
@@ -8,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Common;
 using Objects.Dto;
-using Queries;
 using Queries.Find;
 using Queries.Select;
 using State;
@@ -47,7 +44,7 @@ namespace Core.API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<StateResult>> CreateAsync([FromBody] CreateTaskRequestModel request)
+        public async Task<ActionResult<AffectionViewModel>> CreateAsync([FromBody] CreateTaskRequestModel request)
         {
             var result = await _mediator.Send(new CreateTaskCommand()
             {
@@ -56,7 +53,30 @@ namespace Core.API.Controllers
                 ExpirationUtc = request.ExpirationUtc
             });
 
-            return result;
+            return _viewMapper.ToView(result);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<AffectionViewModel>> PatchAsync(ulong id, [FromBody] UpdateTaskRequestModel request)
+        {
+            var result = await _mediator.Send(new UpdateTaskCommand()
+            {
+                Id = id,
+                Title = request.Title,
+                Description = request.Description,
+                Status = request.Status,
+                ExpirationUtc = request.ExpirationUtc
+            });
+
+            return _viewMapper.ToView(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<AffectionViewModel>> ArchiveAsync(ulong id)
+        {
+            var result = await _mediator.Send(new ArchiveTaskCommand(id));
+
+            return _viewMapper.ToView(result);
         }
     }
 }
