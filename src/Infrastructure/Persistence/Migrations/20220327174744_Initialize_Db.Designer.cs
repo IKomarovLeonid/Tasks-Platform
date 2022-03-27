@@ -9,7 +9,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220327142147_Initialize_Db")]
+    [Migration("20220327174744_Initialize_Db")]
     partial class Initialize_Db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace Persistence.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.23");
 
-            modelBuilder.Entity("Objects.Src.Dto.TaskDto", b =>
+            modelBuilder.Entity("Objects.Dto.TaskDto", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,9 +29,17 @@ namespace Persistence.Migrations
                         .HasColumnName("created_utc")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ExpirationUtc")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnName("description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ExpirationUtc")
                         .HasColumnName("expiration_utc")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -44,6 +52,7 @@ namespace Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnName("title")
                         .HasColumnType("TEXT");
 

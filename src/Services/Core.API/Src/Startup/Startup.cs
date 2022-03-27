@@ -1,10 +1,13 @@
 ﻿using System;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using Core.API.Ioc;
+using Core.API.View.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Converters;
+using Objects.Dto;
 using Persistence;
 using Queries.Src;
 using State.Src;

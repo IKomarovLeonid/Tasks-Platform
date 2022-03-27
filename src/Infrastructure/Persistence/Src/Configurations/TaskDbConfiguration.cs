@@ -13,7 +13,8 @@ namespace Persistence.Configurations
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id).HasColumnName("id");
 
-            builder.Property(t => t.Title).HasColumnName("title");
+            builder.Property(t => t.Title).IsRequired().HasColumnName("title");
+            builder.Property(t => t.Description).IsRequired().HasColumnName("description");
             builder.Property(t => t.State).IsRequired().HasColumnName("state").HasConversion(new EnumToStringConverter<RootState>());
             builder.Property(t => t.Status).IsRequired().HasColumnName("status").HasConversion(new EnumToStringConverter<TaskStatus>());
 

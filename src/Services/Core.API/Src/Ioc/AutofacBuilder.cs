@@ -7,6 +7,10 @@ namespace Core.API.Ioc
         public static ContainerBuilder Build()
         {
             var builder = new ContainerBuilder();
+
+            builder.RegisterModule<DomainModule>();
+            builder.RegisterModule<ServicesModule>();
+            builder.RegisterModule<MappingModule>();
             
             return builder;
         }

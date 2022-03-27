@@ -14,11 +14,13 @@ namespace Persistence.Migrations
                     id = table.Column<ulong>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     state = table.Column<string>(nullable: false),
-                    title = table.Column<string>(nullable: true),
-                    status = table.Column<string>(nullable: false),
-                    expiration_utc = table.Column<DateTime>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
                     created_utc = table.Column<DateTime>(nullable: false),
-                    updated_utc = table.Column<DateTime>(nullable: false)
+                    updated_utc = table.Column<DateTime>(nullable: false),
+                    title = table.Column<string>(nullable: false),
+                    description = table.Column<string>(nullable: false),
+                    status = table.Column<string>(nullable: false),
+                    expiration_utc = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

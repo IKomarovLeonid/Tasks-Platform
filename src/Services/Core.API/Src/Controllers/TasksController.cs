@@ -1,36 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.API.Mapping;
 using Core.API.View;
+using Core.API.View.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Common;
-using TaskStatus = Objects.Dto.TaskStatus;
+using Objects.Dto;
+using Queries;
+using State;
+using State.Commands;
 
 namespace Core.API.Controllers
 {
     [ApiController, Route("api/tasks")]
     public class TasksController : ControllerBase
     {
-        [HttpGet]
-        public async Task<ActionResult<ICollection<TaskViewModel>>> GetAsync(VisibleScope scope)
+        private readonly IMediator _mediator;
+        private readonly IViewMapper _viewMapper;
+
+        public TasksController(IMediator mediator, IViewMapper mapper)
         {
-            return Ok();
+            _mediator = mediator;
+            _viewMapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PageViewModel<TaskDto>>> GetAsync(VisibleScope scope)
+        {
+            var result = await _mediator.Send(new SelectQuery<TaskDto>(scope));
+
+            return PageViewModel<TaskDto>.New(result.Data);
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaskViewModel>> GetByIdAsync()
+        public async Task<ActionResult<TaskViewModel>> GetByIdAsync(ulong id)
         {
-            return new TaskViewModel()
+            var result = await _mediator.Send(new FindQuery<TaskDto>(id));
+
+            return _viewMapper.ToView<TaskDto, TaskViewModel>(result);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult<StateResult>> CreateAsync([FromBody] CreateTaskRequestModel request)
+        {
+            var result = await _mediator.Send(new CreateTaskCommand()
             {
-                Id = 1,
-                Title = "Mock task",
-                State = RootState.Active,
-                Status = TaskStatus.Processing,
-                ExpirationUtc = DateTime.Now.AddDays(1),
-                CreatedUtc = DateTime.Now,
-                UpdatedUtc = DateTime.Now
-            };
+                Title = request.Title,
+                Description = request.Description,
+                ExpirationUtc = request.ExpirationUtc
+            });
+
+            return result;
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     public enum ErrorCode
     {
-        None
+        None,
+        NotFound
     }
 }

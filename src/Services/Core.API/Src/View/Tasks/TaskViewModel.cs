@@ -2,7 +2,7 @@
 using Objects.Common;
 using Objects.Dto;
 
-namespace Core.API.View
+namespace Core.API.View.Tasks
 {
     public class TaskViewModel
     {
