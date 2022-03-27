@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.API.Quartz;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
@@ -21,6 +22,7 @@ namespace Core.API.Startup
             try
             {
                 await MigrateAsync(cancellationToken);
+                await StartJobsAsync(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -32,7 +34,7 @@ namespace Core.API.Startup
         {
             try
             {
-              
+                await StopJobsAsync(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -47,6 +49,24 @@ namespace Core.API.Startup
             var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
 
             await db.Database.EnsureCreatedAsync(cancellationToken);
+        }
+
+        private async Task StartJobsAsync(CancellationToken cancellationToken)
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var service = scope.ServiceProvider.GetRequiredService<QuartzService>();
+
+            await service.StartAsync(cancellationToken);
+        }
+
+        private async Task StopJobsAsync(CancellationToken cancellationToken)
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var service = scope.ServiceProvider.GetRequiredService<QuartzService>();
+
+            await service.StopAsync(cancellationToken);
         }
 
     }

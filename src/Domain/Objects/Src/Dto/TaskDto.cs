@@ -27,6 +27,7 @@ namespace Objects.Dto
         NotDefined,
         Pending,
         Processing,
+        Expired,
         Processed
     }
 
