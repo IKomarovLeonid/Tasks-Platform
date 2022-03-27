@@ -19,6 +19,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Business\Queries\Queries.csproj" />
 	  <ProjectReference Include="..\..\Business\State\State.csproj" />
+	  <ProjectReference Include="..\..\Infrastructure\Persistence\Persistence.csproj" />
 	</ItemGroup>
 
 </Project>

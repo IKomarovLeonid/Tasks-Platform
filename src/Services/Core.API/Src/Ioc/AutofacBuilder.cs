@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace Core.API.Src.Ioc
+namespace Core.API.Ioc
 {
     internal class AutofacBuilder
     {

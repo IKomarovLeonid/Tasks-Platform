@@ -1,4 +1,4 @@
-﻿using Core.API.Src.Startup;
+﻿using Core.API.Startup;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 

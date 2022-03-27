@@ -1,16 +1,21 @@
 ﻿using System;
 using Autofac.Extensions.DependencyInjection;
-using Core.API.Src.Ioc;
+using Core.API.Ioc;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence;
+using Queries.Src;
+using State.Src;
 
-namespace Core.API.Src.Startup
+namespace Core.API.Startup
 {
     public class Startup
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationContext>();
+
             services.AddCors();
 
             services.AddMvcCore(options => options.EnableEndpointRouting = false)
@@ -29,9 +34,10 @@ namespace Core.API.Src.Startup
             var builder = AutofacBuilder.Build();
 
             // mediator 
-            var stateAssembly = AppDomain.CurrentDomain.Load("State");
-            var queriesAssembly = AppDomain.CurrentDomain.Load("Queries");
+            var stateAssembly = AppDomain.CurrentDomain.Load(StateAssembly.Value);
+            var queriesAssembly = AppDomain.CurrentDomain.Load(QueriesAssembly.Value);
             services.AddMediatR(stateAssembly, queriesAssembly);
+            services.AddHostedService<HostedService>();
 
             builder.Populate(services);
             return new AutofacServiceProvider(builder.Build());

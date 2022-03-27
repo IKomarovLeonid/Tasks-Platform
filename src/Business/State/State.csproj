@@ -5,10 +5,6 @@
   </PropertyGroup>
 
 	<ItemGroup>
-    <Folder Include="Src\" />
-  </ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\..\Domain\Environment\Environment.csproj" />
 	</ItemGroup>
 
