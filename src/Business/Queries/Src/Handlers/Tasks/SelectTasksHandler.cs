@@ -4,6 +4,7 @@ using MediatR;
 using Objects.Common;
 using Objects.Dto;
 using Persistence.Storage;
+using Queries.Select;
 
 namespace Queries.Handlers.Tasks
 {

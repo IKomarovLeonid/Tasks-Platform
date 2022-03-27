@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Objects.Common;
 using Objects.Dto;
 using Queries;
+using Queries.Find;
+using Queries.Select;
 using State;
 using State.Commands;
 

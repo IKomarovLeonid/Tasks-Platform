@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Environment;
 using Objects.Common;
 
-namespace Queries
+namespace Queries.Select
 {
-    public class SelectResult<TModel>
+    public class SelectResult<TModel> : IAbstractResult
     {
-        public ErrorCode ErrorCode { get; private init; }
+        public ErrorCode Code { get; private init; }
 
         public DateTime TimeUtc { get; private init; }
 
@@ -17,13 +18,13 @@ namespace Queries
         public static SelectResult<TModel> Fetched(ICollection<TModel> data) => new SelectResult<TModel>()
         {
             Data = data,
-            ErrorCode = ErrorCode.None,
+            Code = ErrorCode.None,
             TimeUtc = DateTime.UtcNow
         };
 
         public static SelectResult<TModel> Error(ErrorCode code) => new SelectResult<TModel>()
         {
-            ErrorCode = code,
+            Code = code,
             TimeUtc = DateTime.UtcNow
         };
     }

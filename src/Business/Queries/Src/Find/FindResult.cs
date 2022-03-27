@@ -1,25 +1,26 @@
-﻿using Objects.Common;
+﻿using Environment;
+using Objects.Common;
 
-namespace Queries
+namespace Queries.Find
 {
-    public class FindResult<TModel>
+    public class FindResult<TModel> : IAbstractResult
     {
         public TModel Data { get; private init; }
 
-        public ErrorCode ErrorCode { get; private init; }
+        public ErrorCode Code { get; private init; }
 
         private FindResult(){}
 
         public static FindResult<TModel> Ok(TModel data) => new()
         {
             Data = data,
-            ErrorCode = ErrorCode.None
+            Code = ErrorCode.None
         };
 
         public static FindResult<TModel> Error(ErrorCode code) => new()
         {
             Data = default,
-            ErrorCode = code
+            Code = code
         };
     }
 }

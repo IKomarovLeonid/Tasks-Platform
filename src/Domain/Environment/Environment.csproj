@@ -9,8 +9,8 @@
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
 	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Src\" />
-  </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Objects\Objects.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -1,6 +1,8 @@
 ﻿using Core.API.View;
 using Microsoft.AspNetCore.Mvc;
 using Queries;
+using Queries.Find;
+using Queries.Select;
 using State;
 
 namespace Core.API.Mapping

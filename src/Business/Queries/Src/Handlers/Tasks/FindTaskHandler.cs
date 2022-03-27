@@ -4,6 +4,7 @@ using Persistence.Storage;
 using System.Threading;
 using System.Threading.Tasks;
 using Objects.Common;
+using Queries.Find;
 
 namespace Queries.Handlers.Tasks
 {
