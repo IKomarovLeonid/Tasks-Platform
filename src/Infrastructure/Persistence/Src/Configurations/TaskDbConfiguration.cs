@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Objects.Src.Common;
-using Objects.Src.Dto;
+using Objects.Common;
+using Objects.Dto;
 
-namespace Persistence.Src.Configurations
+namespace Persistence.Configurations
 {
     internal class TaskDbConfiguration : IEntityTypeConfiguration<TaskDto>
     {

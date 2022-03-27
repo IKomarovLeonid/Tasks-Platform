@@ -1,8 +1,8 @@
 ﻿namespace Objects.Common
 {
-    public enum RootState
+    public enum VisibleScope
     {
         Active,
-        Archived
+        All
     }
 }

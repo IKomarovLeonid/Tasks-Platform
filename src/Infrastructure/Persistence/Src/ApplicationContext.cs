@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Objects.Src.Dto;
-using Persistence.Src.Configurations;
+using Objects.Dto;
+using Persistence.Configurations;
 
 namespace Persistence
 {

@@ -4,6 +4,7 @@ using Core.API.Ioc;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Converters;
 using Persistence;
 using Queries.Src;
 using State.Src;
@@ -19,9 +20,10 @@ namespace Core.API.Startup
             services.AddCors();
 
             services.AddMvcCore(options => options.EnableEndpointRouting = false)
-                .AddJsonOptions(
-                    options => options.JsonSerializerOptions.PropertyNamingPolicy = null
-                    )
+                .AddNewtonsoftJson(o =>
+                {
+                    o.SerializerSettings.Converters.Add(new StringEnumConverter());
+                })
                 .AddApiExplorer();
 
             services.AddSwaggerDocument(settings =>

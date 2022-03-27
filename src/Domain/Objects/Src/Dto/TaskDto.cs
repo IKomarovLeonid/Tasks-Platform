@@ -1,7 +1,9 @@
 ﻿using System;
-using Objects.Src.Common;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json.Converters;
+using Objects.Common;
 
-namespace Objects.Src.Dto
+namespace Objects.Dto
 {
     public class TaskDto
     {
@@ -20,6 +22,7 @@ namespace Objects.Src.Dto
         public DateTime UpdatedUtc { get; set; }
     }
 
+   // [JsonConverter(typeof(StringEnumConverter))]
     public enum TaskStatus
     {
         NotDefined,
