@@ -1,10 +1,12 @@
-﻿using MediatR;
+﻿using System.Linq;
+using MediatR;
 using Objects.Dto;
 using Persistence.Storage;
 using State.Commands;
 using System.Threading;
 using System.Threading.Tasks;
 using Objects.Common;
+using TaskStatus = Objects.Dto.TaskStatus;
 
 namespace State.Handlers
 {
@@ -27,7 +29,10 @@ namespace State.Handlers
             if(request.Title != null) dto.Title = request.Title;
             if(request.Description != null) dto.Description = request.Description;
             if(request.ExpirationUtc.HasValue) dto.ExpirationUtc = request.ExpirationUtc.Value;
-            if(request.Status.HasValue) dto.Status = request.Status.Value;
+            if(request.Status.HasValue && request.Status.Value != TaskStatus.NotDefined) dto.Status = request.Status.Value;
+
+            var result = dto.Validate();
+            if (!result.IsValid) return StateResult.Error(ErrorCode.TaskValidationFailure, result.Errors.First().ToString());
 
             var entity = await _storage.UpdateAsync(dto);
 

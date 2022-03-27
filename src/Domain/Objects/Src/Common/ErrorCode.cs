@@ -4,6 +4,7 @@
     {
         None,
         NotFound,
+        TaskValidationFailure,
         TaskArchived,
     }
 }

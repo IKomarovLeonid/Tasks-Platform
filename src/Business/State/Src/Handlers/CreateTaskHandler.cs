@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Linq;
+using MediatR;
 using Objects.Dto;
 using Persistence.Storage;
 using State.Commands;
@@ -30,6 +31,9 @@ namespace State.Handlers
                 Status = TaskStatus.Pending,
                 State = RootState.Active
             };
+
+            var result = dto.Validate();
+            if(!result.IsValid) return StateResult.Error(ErrorCode.TaskValidationFailure, result.Errors.First().ToString());
 
             var entity = await _storage.AddAsync(dto);
 
