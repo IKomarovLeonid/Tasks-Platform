@@ -1,4 +1,5 @@
-﻿using Core.API.Startup;
+﻿using Core.API.Configuration;
+using Core.API.Startup;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
@@ -13,7 +14,8 @@ namespace Tasks_Platform
 
         private static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>().UseUrls("http://localhost:8080");
+            var baseUrl = ConfigurationReader.ReadConfig<ApplicationConfiguration>().Url;
+            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>().UseUrls(baseUrl);
         }
     }
 }

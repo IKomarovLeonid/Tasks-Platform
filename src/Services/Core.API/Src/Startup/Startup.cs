@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using Core.API.Configuration;
 using Core.API.Ioc;
 using Core.API.View.Tasks;
 using MediatR;
@@ -18,6 +19,9 @@ namespace Core.API.Startup
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(t => 
+                ConfigurationReader.ReadConfig<ApplicationConfiguration>());
+
             services.AddDbContext<ApplicationContext>();
 
             services.AddCors();
