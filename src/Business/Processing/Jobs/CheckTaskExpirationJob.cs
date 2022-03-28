@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using NLog;
 using Objects.Common;
 using Objects.Dto;
 using Persistence.Storage;
@@ -13,6 +14,8 @@ namespace Processing.Jobs
         // services
         private readonly IStorage<TaskDto> _storage;
 
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(CheckTaskExpirationJob));
+
         public CheckTaskExpirationJob(IStorage<TaskDto> storage)
         {
             _storage = storage;
@@ -24,25 +27,25 @@ namespace Processing.Jobs
 
             if (tasks.Count == 0) return;
 
-            Console.WriteLine($"Job checks '{tasks.Count}' tasks for expiration");
+            _logger.Info($"Job checks '{tasks.Count}' tasks for expiration");
 
             foreach (var task in tasks)
             {
-                Console.WriteLine($"Job checks #{task.Id} expiration...");
+                _logger.Info($"Job checks #{task.Id} expiration...");
 
                 var time = DateTime.UtcNow;
 
                 if (task.ExpirationUtc.Value <= time && task.Status != TaskStatus.Expired)
                 {
-                    Console.WriteLine($"Task #{task.Id} has been expired (current time: {time}), (expiration: {task.ExpirationUtc}");
+                    _logger.Warn($"Task #{task.Id} has been expired (current time: {time}), (expiration: {task.ExpirationUtc}");
                     task.Status = TaskStatus.Expired;
                     await _storage.UpdateAsync(task);
                     continue;
                 }
-                Console.WriteLine($"Task #{task.Id} does not expired");
+                _logger.Info($"Task #{task.Id} does not expired");
             }
 
-            Console.WriteLine($"Job has checked '{tasks.Count}' tasks for expiration");
+            _logger.Info($"Job has checked '{tasks.Count}' tasks for expiration");
         }
     }
 }
