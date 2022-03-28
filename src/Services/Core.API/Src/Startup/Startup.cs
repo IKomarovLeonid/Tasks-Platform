@@ -5,10 +5,11 @@ using Core.API.Configuration;
 using Core.API.Ioc;
 using Core.API.View.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Converters;
-using Objects.Dto;
 using Persistence;
 using Queries.Src;
 using State.Src;
@@ -19,8 +20,7 @@ namespace Core.API.Startup
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(t => 
-                ConfigurationReader.ReadConfig<ApplicationConfiguration>());
+            services.AddSingleton(t => ConfigurationReader.ReadConfig<ApplicationConfiguration>());
 
             services.AddDbContext<ApplicationContext>();
 
@@ -47,6 +47,9 @@ namespace Core.API.Startup
             var queriesAssembly = AppDomain.CurrentDomain.Load(QueriesAssembly.Value);
             services.AddMediatR(stateAssembly, queriesAssembly);
             services.AddHostedService<HostedService>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer();
 
             builder.Populate(services);
             return new AutofacServiceProvider(builder.Build());
