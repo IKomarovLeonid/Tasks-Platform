@@ -1,4 +1,5 @@
 ﻿using Core.API.Authentication;
+using Core.API.View.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,20 +15,29 @@ namespace Core.API.Controllers
         }
 
         [HttpPost("generate")]
-        public ActionResult GenerateToken(string username, string password)
+        public ActionResult<AccessToken> GenerateToken([FromBody] TokenRequest request)
         {
-            var isAuthorized = _service.IsAuthenticated(new AuthenticationContext()
+            var context = new AuthenticationContext()
             {
-                Username = username,
-                Password = password
-            });
+                Username = request.Username,
+                Password = request.Password,
+            };
+
+
+            var isAuthorized = _service.IsAuthenticated(context);
 
             if (!isAuthorized)
             {
                 return Forbid();
             }
 
-            return Ok();
+            var token = _service.GenerateToken(context);
+
+            return new AccessToken()
+            {
+                Token = token
+            };
         }
+
     }
 }
