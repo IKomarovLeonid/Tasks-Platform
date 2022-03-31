@@ -26,9 +26,7 @@ namespace Core.API.Mapping
         {
             if (result.Code == ErrorCode.None)
             {
-                if(result.Id > 0) return new OkObjectResult(AffectionViewModel.New(result.Id));
-
-                return new OkObjectResult(AffectionViewModel.New());
+                return new OkObjectResult(AffectionViewModel.New(result.Id));
             }
 
             return ToErrorResult(result);
@@ -61,7 +59,6 @@ namespace Core.API.Mapping
 
         private ActionResult ToErrorResult(IAbstractResult result)
         {
-            //choose http response
             var isNotFound = result.Code.ToString().Contains("NotFound");
 
             if (isNotFound)

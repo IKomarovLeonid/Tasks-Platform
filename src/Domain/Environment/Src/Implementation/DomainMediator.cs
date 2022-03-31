@@ -33,7 +33,7 @@ namespace Environment.Src.Implementation
             }
             catch(Exception ex)
             {
-                return StateResult.Error(ErrorCode.NotFound, message: ex.Message);
+                return StateResult.Error(ErrorCode.InternalError, message: ex.Message);
             }
         }
     }

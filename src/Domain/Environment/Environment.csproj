@@ -18,8 +18,10 @@
 	<ItemGroup>
 	  <None Remove="Src\Implementation\" />
 	  <None Remove="Newtonsoft.Json" />
+	  <None Remove="Src\Queries\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Src\Implementation\" />
+	  <Folder Include="Src\Queries\" />
 	</ItemGroup>
 </Project>

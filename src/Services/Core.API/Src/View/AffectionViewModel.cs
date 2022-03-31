@@ -10,6 +10,6 @@ namespace Core.API.View
 
         public static AffectionViewModel New() => new() { TimeUtc = DateTime.UtcNow };
 
-        public static AffectionViewModel New(ulong id) => new() { Id = id, TimeUtc = DateTime.UtcNow };
+        public static AffectionViewModel New(ulong? id) => new() { Id = id, TimeUtc = DateTime.UtcNow };
     }
 }

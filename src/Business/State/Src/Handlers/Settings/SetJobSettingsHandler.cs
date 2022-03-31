@@ -37,7 +37,7 @@ namespace State.Handlers.Settings
 
             await _storage.UpdateAsync(baseSettings);
 
-            return StateResult.Applied(0);
+            return StateResult.Applied();
         }
     }
 }

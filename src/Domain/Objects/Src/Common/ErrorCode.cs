@@ -7,5 +7,6 @@
         TaskValidationFailure,
         TaskArchived,
         SettingsValidationFailure,
+        InternalError
     }
 }

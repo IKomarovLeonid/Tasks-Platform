@@ -6,7 +6,7 @@ namespace State
 {
     public class StateResult : IAbstractResult
     {
-        public ulong Id { get; private init; }
+        public ulong? Id { get; private init; }
 
         public ErrorCode Code { get; private init; }
 
@@ -21,7 +21,12 @@ namespace State
             Id = id,
             Code = ErrorCode.None,
             ErrorMessage = string.Empty,
-            ErrorTimeUtc = DateTime.UtcNow,
+        };
+
+        public static StateResult Applied() => new StateResult()
+        {
+            Code = ErrorCode.None,
+            ErrorMessage = string.Empty
         };
 
         public static StateResult Error(ErrorCode code, string message = null) => new StateResult()

@@ -35,7 +35,7 @@ namespace Environment.Src.Implementation
             }
             catch(Exception ex)
             {
-                return FindResult<TModel>.Error(ErrorCode.NotFound);
+                return FindResult<TModel>.Error(ErrorCode.InternalError);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Environment.Src.Implementation
             }
             catch(Exception ex)
             {
-                return SelectResult<TModel>.Error(ErrorCode.NotFound);
+                return SelectResult<TModel>.Error(ErrorCode.InternalError);
             }
         }
     }
