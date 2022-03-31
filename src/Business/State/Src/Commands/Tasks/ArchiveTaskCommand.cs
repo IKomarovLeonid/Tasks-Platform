@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace State.Commands
+namespace State.Commands.Tasks
 {
     public class ArchiveTaskCommand : IRequest<StateResult>
     {

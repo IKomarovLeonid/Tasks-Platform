@@ -8,6 +8,18 @@ namespace Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Settings",
+                columns: table => new
+                {
+                    key = table.Column<string>(nullable: false),
+                    value = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Settings", x => x.key);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tasks",
                 columns: table => new
                 {
@@ -30,6 +42,9 @@ namespace Persistence.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Settings");
+
             migrationBuilder.DropTable(
                 name: "Tasks");
         }

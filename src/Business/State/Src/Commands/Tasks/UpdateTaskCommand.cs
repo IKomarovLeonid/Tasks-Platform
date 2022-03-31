@@ -2,7 +2,7 @@
 using MediatR;
 using Objects.Dto;
 
-namespace State.Commands
+namespace State.Commands.Tasks
 {
     public class UpdateTaskCommand : IRequest<StateResult>
     {

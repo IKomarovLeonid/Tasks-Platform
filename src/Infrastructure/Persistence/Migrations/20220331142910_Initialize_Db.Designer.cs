@@ -9,7 +9,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220327174744_Initialize_Db")]
+    [Migration("20220331142910_Initialize_Db")]
     partial class Initialize_Db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,22 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("Objects.Settings.BaseSettings", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnName("key")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnName("value")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("Settings");
                 });
 #pragma warning restore 612, 618
         }

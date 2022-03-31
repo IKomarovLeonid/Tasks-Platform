@@ -6,5 +6,6 @@
         NotFound,
         TaskValidationFailure,
         TaskArchived,
+        SettingsValidationFailure,
     }
 }

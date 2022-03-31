@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Objects.Dto;
+using Objects.Settings;
 using Persistence.Configurations;
 
 namespace Persistence
@@ -24,12 +25,14 @@ namespace Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.ApplyConfiguration(new TaskDbConfiguration());
+            modelBuilder.ApplyConfiguration(new SettingsDbConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<TaskDto> Tasks { get; set; }
+
+        public DbSet<BaseSettings> Settings { get; set; }
     }
 }

@@ -10,5 +10,7 @@ namespace Queries.Find
         {
             Id = id;
         }
+
+        public FindQuery(){}
     }
 }

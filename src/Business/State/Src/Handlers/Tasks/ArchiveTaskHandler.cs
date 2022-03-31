@@ -1,13 +1,13 @@
-﻿using MediatR;
-using State.Commands;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Objects.Common;
 using Objects.Dto;
 using Persistence.Storage;
+using State.Commands.Tasks;
 using TaskStatus = Objects.Dto.TaskStatus;
 
-namespace State.Handlers
+namespace State.Handlers.Tasks
 {
     internal class ArchiveTaskHandler : IRequestHandler<ArchiveTaskCommand, StateResult>
     {

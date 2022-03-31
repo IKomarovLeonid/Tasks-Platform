@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace State.Commands
+namespace State.Commands.Tasks
 {
     public class CreateTaskCommand : IRequest<StateResult>
     {

@@ -62,6 +62,22 @@ namespace Persistence.Migrations
 
                     b.ToTable("Tasks");
                 });
+
+            modelBuilder.Entity("Objects.Settings.BaseSettings", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnName("key")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnName("value")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("Settings");
+                });
 #pragma warning restore 612, 618
         }
     }

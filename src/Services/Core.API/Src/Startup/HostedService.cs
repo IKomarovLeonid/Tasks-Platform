@@ -68,6 +68,5 @@ namespace Core.API.Startup
 
             await service.StopAsync(cancellationToken);
         }
-
     }
 }
