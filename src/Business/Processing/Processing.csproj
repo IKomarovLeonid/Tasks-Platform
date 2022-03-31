@@ -17,9 +17,11 @@
 	<ItemGroup>
 	  <None Remove="Src\" />
 	  <None Remove="Src\Jobs\" />
+	  <None Remove="Src\Listeners\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Src\" />
 	  <Folder Include="Src\Jobs\" />
+	  <Folder Include="Src\Listeners\" />
 	</ItemGroup>
 </Project>
