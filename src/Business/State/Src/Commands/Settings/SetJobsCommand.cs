@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Environment.Src;
+using MediatR;
 
 namespace State.Commands.Settings
 {
-    public class SetJobsCommand : IRequest<StateResult>
+    public class SetJobsCommand : IStateCommand
     {
         public double CheckTaskExpirationJobSec { get; set; }
 

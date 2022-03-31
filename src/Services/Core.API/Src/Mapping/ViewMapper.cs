@@ -26,7 +26,9 @@ namespace Core.API.Mapping
         {
             if (result.Code == ErrorCode.None)
             {
-                return new OkObjectResult(AffectionViewModel.New(result.Id));
+                if(result.Id > 0) return new OkObjectResult(AffectionViewModel.New(result.Id));
+
+                return new OkObjectResult(AffectionViewModel.New());
             }
 
             return ToErrorResult(result);

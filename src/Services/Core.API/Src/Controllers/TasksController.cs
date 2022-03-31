@@ -2,6 +2,7 @@
 using Core.API.Mapping;
 using Core.API.View;
 using Core.API.View.Tasks;
+using Environment.Src;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Common;
@@ -16,19 +17,21 @@ namespace Core.API.Controllers
     [ApiController, Route("api/tasks")]
     public class TasksController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IDomainMediator _mediator;
+        private readonly IQueryMediator _queryMediator;
         private readonly IViewMapper _viewMapper;
 
-        public TasksController(IMediator mediator, IViewMapper mapper)
+        public TasksController(IDomainMediator mediator, IQueryMediator queryMediator, IViewMapper mapper)
         {
             _mediator = mediator;
+            _queryMediator = queryMediator;
             _viewMapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<PageViewModel<TaskDto>>> GetAsync(VisibleScope scope)
         {
-            var result = await _mediator.Send(new SelectQuery<TaskDto>(scope));
+            var result = await _queryMediator.SelectAsync<TaskDto>(new SelectQuery<TaskDto>(scope));
 
             return PageViewModel<TaskDto>.New(result.Data);
         }
@@ -37,7 +40,7 @@ namespace Core.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskViewModel>> GetByIdAsync(ulong id)
         {
-            var result = await _mediator.Send(new FindQuery<TaskDto>(id));
+            var result = await _queryMediator.FindAsync<TaskDto>(new FindQuery<TaskDto>(id));
 
             return _viewMapper.ToView<TaskDto, TaskViewModel>(result);
         }
@@ -46,7 +49,7 @@ namespace Core.API.Controllers
         [HttpPost]
         public async Task<ActionResult<AffectionViewModel>> CreateAsync([FromBody] CreateTaskRequestModel request)
         {
-            var result = await _mediator.Send(new CreateTaskCommand()
+            var result = await _mediator.SendAsync(new CreateTaskCommand()
             {
                 Title = request.Title,
                 Description = request.Description,
@@ -59,7 +62,7 @@ namespace Core.API.Controllers
         [HttpPatch("{id}")]
         public async Task<ActionResult<AffectionViewModel>> PatchAsync(ulong id, [FromBody] UpdateTaskRequestModel request)
         {
-            var result = await _mediator.Send(new UpdateTaskCommand()
+            var result = await _mediator.SendAsync(new UpdateTaskCommand()
             {
                 Id = id,
                 Title = request.Title,
@@ -74,7 +77,7 @@ namespace Core.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<AffectionViewModel>> ArchiveAsync(ulong id)
         {
-            var result = await _mediator.Send(new ArchiveTaskCommand(id));
+            var result = await _mediator.SendAsync(new ArchiveTaskCommand(id));
 
             return _viewMapper.ToView(result);
         }

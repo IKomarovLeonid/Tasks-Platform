@@ -1,9 +1,10 @@
 ﻿using System;
+using Environment.Src;
 using MediatR;
 
 namespace State.Commands.Tasks
 {
-    public class CreateTaskCommand : IRequest<StateResult>
+    public class CreateTaskCommand : IStateCommand
     {
         public string Title { get; set; }
 

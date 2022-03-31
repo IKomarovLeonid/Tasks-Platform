@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Core.API.Mapping;
 using Core.API.View;
+using Environment.Src;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Settings;
@@ -13,19 +14,21 @@ namespace Core.API.Controllers
     [ApiController, Route("api/settings")]
     public class SettingsController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IDomainMediator _mediator;
+        private readonly IQueryMediator _queryMediator;
         private readonly IViewMapper _viewMapper;
 
-        public SettingsController(IMediator mediator, IViewMapper mapper)
+        public SettingsController(IDomainMediator mediator, IQueryMediator queryMediator, IViewMapper mapper)
         {
             _mediator = mediator;
+            _queryMediator = queryMediator;
             _viewMapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<JobSettings>> GetJobSettingsAsync()
         {
-            var result = await _mediator.Send(new FindQuery<JobSettings>());
+            var result = await _queryMediator.FindAsync<JobSettings>(new FindQuery<JobSettings>());
 
             return result.Data;
         }
@@ -33,7 +36,7 @@ namespace Core.API.Controllers
         [HttpPost]
         public async Task<ActionResult<AffectionViewModel>> SetJobSettingsAsync(JobSettings model)
         {
-            var result = await _mediator.Send(new SetJobsCommand()
+            var result = await _mediator.SendAsync(new SetJobsCommand()
             {
                 CheckTaskExpirationJobSec = model.CheckTaskExpirationJobSec
             });
