@@ -7,7 +7,6 @@ namespace Core.API.View
     {
         public ICollection<TModel> Items { get; private init; } = new Collection<TModel>();
 
-        //helpers
         public static PageViewModel<TModel> New(ICollection<TModel> items) => new PageViewModel<TModel>() { Items = items };
     }
 }

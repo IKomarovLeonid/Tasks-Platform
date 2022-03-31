@@ -14,4 +14,12 @@
 	  <ProjectReference Include="..\..\Infrastructure\Persistence\Persistence.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Src\" />
+	  <None Remove="Src\Jobs\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Src\" />
+	  <Folder Include="Src\Jobs\" />
+	</ItemGroup>
 </Project>

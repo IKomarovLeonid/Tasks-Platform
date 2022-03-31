@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using MediatR;
 using Newtonsoft.Json;
@@ -14,6 +15,8 @@ namespace Environment.Src.Implementation
 
         private static readonly ILogger _logger = LogManager.GetLogger(nameof(DomainMediator));
 
+        private readonly Stopwatch _stopwatch = new Stopwatch();
+
         public DomainMediator(IMediator mediator)
         {
             _mediator = mediator;
@@ -25,14 +28,21 @@ namespace Environment.Src.Implementation
             {
                 _logger.Info($"Execute '{command.Name}': {JsonConvert.SerializeObject(command)}");
 
+                _stopwatch.Start();
+
                 var response = await _mediator.Send(command);
 
-                _logger.Info($"Response of '{command.Name}': {JsonConvert.SerializeObject(response)}");
+                _stopwatch.Stop();
+
+                _logger.Info($"Response (elapsed: {_stopwatch.ElapsedMilliseconds} milliseconds) of '{command.Name}': {JsonConvert.SerializeObject(response)}");
+
+                _stopwatch.Reset();
 
                 return response;
             }
             catch(Exception ex)
             {
+                _stopwatch.Reset();
                 return StateResult.Error(ErrorCode.InternalError, message: ex.Message);
             }
         }

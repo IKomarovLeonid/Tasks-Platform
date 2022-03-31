@@ -1,6 +1,4 @@
-﻿using Environment.Src;
-using Environment.Src.State;
-using MediatR;
+﻿using Environment.Src.State;
 
 namespace State.Commands.Settings
 {

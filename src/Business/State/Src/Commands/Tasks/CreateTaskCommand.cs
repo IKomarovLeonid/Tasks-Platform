@@ -1,7 +1,5 @@
 ﻿using System;
-using Environment.Src;
 using Environment.Src.State;
-using MediatR;
 
 namespace State.Commands.Tasks
 {
