@@ -23,11 +23,11 @@ namespace Environment.Src.Implementation
         {
             try
             {
-                _logger.Info(JsonConvert.SerializeObject(command));
+                _logger.Info($"Execute '{command.Name}': {JsonConvert.SerializeObject(command)}");
 
                 var response = await _mediator.Send(command);
 
-                _logger.Info(JsonConvert.SerializeObject(response));
+                _logger.Info($"Response of '{command.Name}': {JsonConvert.SerializeObject(response)}");
 
                 return response;
             }

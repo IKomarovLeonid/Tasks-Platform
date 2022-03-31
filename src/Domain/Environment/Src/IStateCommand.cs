@@ -6,6 +6,6 @@ namespace Environment.Src
 {
     public interface IStateCommand : IRequest<StateResult>
     {
-
+        string Name { get; }
     }
 }
