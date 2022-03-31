@@ -19,7 +19,7 @@ namespace Core.API.Quartz
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             var cachesJobDetail = JobBuilder.Create<CheckTaskExpirationJob>()
-                .WithIdentity("CheckTaskExpirationJob", "group1")
+                .WithIdentity(nameof(CheckTaskExpirationJob), "group1")
                 .Build();
 
             ITrigger cachesJobTrigger = TriggerBuilder.Create()

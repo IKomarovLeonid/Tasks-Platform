@@ -12,6 +12,7 @@ namespace Persistence.Configurations
             builder.Property(t => t.Key).HasColumnName("key");
 
             builder.Property(t => t.Value).IsRequired().HasColumnName("value");
+            builder.Property(t => t.UpdatedUtc).IsRequired().HasColumnName("updated_utc");
         }
     }
 }

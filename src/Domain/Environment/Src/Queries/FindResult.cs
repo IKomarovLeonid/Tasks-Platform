@@ -9,6 +9,8 @@ namespace Queries.Find
 
         public ErrorCode Code { get; private init; }
 
+        public string Message { get; private init; }
+
         private FindResult(){}
 
         public static FindResult<TModel> Ok(TModel data) => new()
@@ -17,10 +19,11 @@ namespace Queries.Find
             Code = ErrorCode.None
         };
 
-        public static FindResult<TModel> Error(ErrorCode code) => new()
+        public static FindResult<TModel> Error(ErrorCode code, string message = " ") => new()
         {
             Data = default,
-            Code = code
+            Code = code,
+            Message = message,
         };
     }
 }

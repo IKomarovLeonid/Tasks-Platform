@@ -9,7 +9,7 @@ namespace Queries.Select
     {
         public ErrorCode Code { get; private init; }
 
-        public DateTime TimeUtc { get; private init; }
+        public string ErrorMessage { get; private init; }
 
         public ICollection<TModel> Data { get; private init; }
 
@@ -18,14 +18,13 @@ namespace Queries.Select
         public static SelectResult<TModel> Fetched(ICollection<TModel> data) => new SelectResult<TModel>()
         {
             Data = data,
-            Code = ErrorCode.None,
-            TimeUtc = DateTime.UtcNow
+            Code = ErrorCode.None
         };
 
-        public static SelectResult<TModel> Error(ErrorCode code) => new SelectResult<TModel>()
+        public static SelectResult<TModel> Error(ErrorCode code, string message = " ") => new SelectResult<TModel>()
         {
             Code = code,
-            TimeUtc = DateTime.UtcNow
+            ErrorMessage = message
         };
     }
 }

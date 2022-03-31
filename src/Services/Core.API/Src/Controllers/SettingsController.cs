@@ -25,7 +25,7 @@ namespace Core.API.Controllers
             _viewMapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("jobs")]
         public async Task<ActionResult<JobSettings>> GetJobSettingsAsync()
         {
             var result = await _queryMediator.FindAsync<JobSettings>(new FindQuery<JobSettings>());
@@ -33,7 +33,7 @@ namespace Core.API.Controllers
             return result.Data;
         }
 
-        [HttpPost]
+        [HttpPost("jobs")]
         public async Task<ActionResult<AffectionViewModel>> SetJobSettingsAsync(JobSettings model)
         {
             var result = await _mediator.SendAsync(new SetJobsCommand()
