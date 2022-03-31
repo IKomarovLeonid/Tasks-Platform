@@ -2,15 +2,21 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Core.API.Quartz;
+using Environment.Src;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog;
 using Persistence;
+using State.Commands.Settings;
+using State.Src.Commands.Settings;
 
 namespace Core.API.Startup
 {
     internal class HostedService : IHostedService
     {
         private readonly IServiceScopeFactory _scopeFactory;
+
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(HostedService));
 
         public HostedService(IServiceScopeFactory factory)
         {
@@ -23,10 +29,11 @@ namespace Core.API.Startup
             {
                 await MigrateAsync(cancellationToken);
                 await StartJobsAsync(cancellationToken);
+                await RunDefaultCommandsAsync(cancellationToken);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                _logger.Error(ex);
             }
         }
 
@@ -38,7 +45,7 @@ namespace Core.API.Startup
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                _logger.Error(ex);
             }
         }
 
@@ -67,6 +74,19 @@ namespace Core.API.Startup
             var service = scope.ServiceProvider.GetRequiredService<QuartzService>();
 
             await service.StopAsync(cancellationToken);
+        }
+
+        private async Task RunDefaultCommandsAsync(CancellationToken token)
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var mediator = scope.ServiceProvider.GetRequiredService<IDomainMediator>();
+
+            _logger.Info("Run default settings command...");
+
+            await mediator.SendAsync(new SetDefaultSettingsCommand());
+
+            _logger.Info("Run default settings command has been finished");
         }
     }
 }
