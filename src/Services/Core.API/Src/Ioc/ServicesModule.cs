@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Core.API.Authentication;
 using Core.API.Mapping;
 
 namespace Core.API.Ioc
@@ -10,8 +9,6 @@ namespace Core.API.Ioc
         {
             builder.RegisterType<ViewMapper>().As<IViewMapper>()
                 .SingleInstance();
-
-            builder.RegisterType<AuthenticationService>().As<IAuthentication>().SingleInstance();
         }
     }
 }

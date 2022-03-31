@@ -1,11 +1,8 @@
 ﻿using System;
 using Autofac.Extensions.DependencyInjection;
-using AutoMapper;
 using Core.API.Configuration;
 using Core.API.Ioc;
-using Core.API.View.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

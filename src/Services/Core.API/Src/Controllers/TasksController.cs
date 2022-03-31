@@ -3,7 +3,6 @@ using Core.API.Mapping;
 using Core.API.View;
 using Core.API.View.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Common;
 using Objects.Dto;
@@ -13,7 +12,7 @@ using State.Commands;
 
 namespace Core.API.Controllers
 {
-    [ApiController, Route("api/tasks"), Authorize]
+    [ApiController, Route("api/tasks")]
     public class TasksController : ControllerBase
     {
         private readonly IMediator _mediator;
