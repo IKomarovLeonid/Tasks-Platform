@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Queries.Find;
-using Queries.Select;
+﻿using System.Threading.Tasks;
+using Environment.Queries;
 
-namespace Environment.Src
+namespace Environment
 {
     public interface IQueryMediator
     {

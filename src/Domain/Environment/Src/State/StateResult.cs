@@ -1,8 +1,7 @@
 ﻿using System;
-using Environment;
 using Objects.Common;
 
-namespace State
+namespace Environment.State
 {
     public class StateResult : IAbstractResult
     {

@@ -3,12 +3,12 @@ using Autofac.Extensions.DependencyInjection;
 using Core.API.Configuration;
 using Core.API.Ioc;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Converters;
 using Persistence;
-using Queries.Src;
+using Queries;
+using State;
 using State.Src;
 
 namespace Core.API.Startup
@@ -44,9 +44,6 @@ namespace Core.API.Startup
             var queriesAssembly = AppDomain.CurrentDomain.Load(QueriesAssembly.Value);
             services.AddMediatR(stateAssembly, queriesAssembly);
             services.AddHostedService<HostedService>();
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer();
 
             builder.Populate(services);
             return new AutofacServiceProvider(builder.Build());

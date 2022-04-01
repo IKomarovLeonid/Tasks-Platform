@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using State;
+﻿using System.Threading.Tasks;
+using Environment.State;
 
-namespace Environment.Src
+namespace Environment
 {
     public interface IDomainMediator
     {

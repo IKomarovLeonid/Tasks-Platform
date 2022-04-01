@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Core.API.Mapping;
-using Environment.Src.Implementation;
+using Environment.Implementation;
 
 namespace Core.API.Ioc
 {

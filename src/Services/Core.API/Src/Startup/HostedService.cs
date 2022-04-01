@@ -2,13 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Core.API.Quartz;
-using Environment.Src;
+using Environment;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
 using Persistence;
 using State.Commands.Settings;
-using State.Src.Commands.Settings;
 
 namespace Core.API.Startup
 {

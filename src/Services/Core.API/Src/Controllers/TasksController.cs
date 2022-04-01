@@ -2,13 +2,12 @@
 using Core.API.Mapping;
 using Core.API.View;
 using Core.API.View.Tasks;
-using Environment.Src;
+using Environment;
+using Environment.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Common;
 using Objects.Dto;
-using Queries.Find;
-using Queries.Select;
 using State.Commands;
 using State.Commands.Tasks;
 

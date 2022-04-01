@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Environment.State;
 using MediatR;
-using State;
 
-namespace Environment.Src
+namespace Environment
 {
     public interface IStateCommand : IRequest<StateResult>
     {

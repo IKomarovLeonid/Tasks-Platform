@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Core.API.Mapping;
 using Core.API.View;
-using Environment.Src;
+using Environment;
+using Environment.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Settings;
-using Queries.Find;
 using State.Commands.Settings;
 
 namespace Core.API.Controllers

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Environment;
+﻿using System.Collections.Generic;
 using Objects.Common;
 
-namespace Queries.Select
+namespace Environment.Queries
 {
     public class SelectResult<TModel> : IAbstractResult
     {

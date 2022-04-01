@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace Queries.Src
+﻿namespace Queries
 {
     public static class QueriesAssembly
     {

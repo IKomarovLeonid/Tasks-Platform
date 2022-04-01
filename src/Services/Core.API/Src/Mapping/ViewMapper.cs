@@ -2,12 +2,12 @@
 using AutoMapper;
 using Core.API.View;
 using Environment;
+using Environment.Queries;
+using Environment.State;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Common;
 using Queries;
-using Queries.Find;
-using Queries.Select;
 using State;
 
 namespace Core.API.Mapping

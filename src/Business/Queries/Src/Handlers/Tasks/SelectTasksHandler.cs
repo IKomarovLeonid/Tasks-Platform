@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Environment.Queries;
 using MediatR;
 using Objects.Common;
 using Objects.Dto;
 using Persistence.Storage;
-using Queries.Select;
 
 namespace Queries.Handlers.Tasks
 {

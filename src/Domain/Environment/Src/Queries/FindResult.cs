@@ -1,7 +1,6 @@
-﻿using Environment;
-using Objects.Common;
+﻿using Objects.Common;
 
-namespace Queries.Find
+namespace Environment.Queries
 {
     public class FindResult<TModel> : IAbstractResult
     {

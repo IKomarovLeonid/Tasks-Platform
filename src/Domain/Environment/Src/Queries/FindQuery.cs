@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Queries.Find
+namespace Environment.Queries
 {
     public class FindQuery<TModel> : IRequest<FindResult<TModel>>
     {

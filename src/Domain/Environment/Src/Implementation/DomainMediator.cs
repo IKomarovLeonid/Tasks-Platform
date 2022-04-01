@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Environment.State;
 using MediatR;
 using Newtonsoft.Json;
 using NLog;
 using Objects.Common;
-using State;
 
-namespace Environment.Src.Implementation
+namespace Environment.Implementation
 {
     public class DomainMediator : IDomainMediator
     {

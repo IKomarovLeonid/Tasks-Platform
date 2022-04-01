@@ -1,5 +1,6 @@
 ﻿using System;
-namespace Processing.Src.Listeners
+
+namespace Processing.Listeners
 {
     public class JobsListener : IListener
     {

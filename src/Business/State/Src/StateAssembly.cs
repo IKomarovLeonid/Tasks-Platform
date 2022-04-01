@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace State.Src
+﻿namespace State
 {
     public static class StateAssembly
     {

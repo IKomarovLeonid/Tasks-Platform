@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Objects.Common;
 
-namespace Queries.Select
+namespace Environment.Queries
 {
     public class SelectQuery<TModel> : IRequest<SelectResult<TModel>>
     {

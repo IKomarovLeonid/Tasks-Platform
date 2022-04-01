@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Environment.Queries;
 using MediatR;
 using Newtonsoft.Json;
 using NLog;
 using Objects.Common;
-using Queries.Find;
-using Queries.Select;
 
-namespace Environment.Src.Implementation
+namespace Environment.Implementation
 {
     public class QueryMediator : IQueryMediator
     {

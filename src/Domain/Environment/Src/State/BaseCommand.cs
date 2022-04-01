@@ -1,9 +1,8 @@
-﻿using System;
-namespace Environment.Src.State
+﻿namespace Environment.State
 {
     public abstract class BaseCommand : IStateCommand
     {
-        public BaseCommand(string name)
+        protected BaseCommand(string name)
         {
             Name = name;
         }

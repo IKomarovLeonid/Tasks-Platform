@@ -1,5 +1,6 @@
 ﻿using System;
-namespace Processing.Src
+
+namespace Processing
 {
     public interface IListener : IDisposable
     {

@@ -1,8 +1,6 @@
-﻿using System;
-using Environment.Src;
-using Environment.Src.State;
+﻿using Environment.State;
 
-namespace State.Src.Commands.Settings
+namespace State.Commands.Settings
 {
     public class SetDefaultSettingsCommand : BaseCommand
     {
