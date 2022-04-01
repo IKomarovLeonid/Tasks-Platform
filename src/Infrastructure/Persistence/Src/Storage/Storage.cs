@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Objects;
+using Persistence.Src.Events;
 
 namespace Persistence.Storage
 {
     public class Storage<TModel> : IStorage<TModel> where TModel : class, IDto
     {
         private readonly IServiceScopeFactory _factory;
+
+        private readonly Subject<StateEvent<TModel>> _subject = new Subject<StateEvent<TModel>>();
+        private readonly EventLoopScheduler _scheduler = new EventLoopScheduler();
 
         public Storage(IServiceScopeFactory factory)
         {
@@ -32,6 +39,8 @@ namespace Persistence.Storage
 
             await context.SaveChangesAsync();
 
+            _subject.OnNext(StateEvent<TModel>.Create(entity.Entity));
+
             return entity.Entity;
         }
 
@@ -46,6 +55,8 @@ namespace Persistence.Storage
             var entryEntry = context.Entry(entry);
             entryEntry.CurrentValues.SetValues(model);
             await context.SaveChangesAsync();
+
+            _subject.OnNext(StateEvent<TModel>.Update(entryEntry.Entity));
 
             return entryEntry.Entity;
         }
@@ -71,6 +82,11 @@ namespace Persistence.Storage
             var entities = context.Set<TModel>().AsNoTracking();
 
             return await entities.FirstOrDefaultAsync(t => t.Id == id);
+        }
+
+        public IDisposable Subscribe(Action<StateEvent<TModel>> subscriber)
+        {
+            return _subject.ObserveOn(_scheduler).Subscribe(subscriber);
         }
     }
 }

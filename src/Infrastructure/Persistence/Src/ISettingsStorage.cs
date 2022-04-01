@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Objects;
+using Persistence.Src.Events;
 
 namespace Persistence.Storage
 {
@@ -8,5 +10,7 @@ namespace Persistence.Storage
         Task<TModel> UpdateAsync(TModel model);
         
         Task<TModel> FindAsync(string key);
+
+        IDisposable Subscribe(Action<StateEvent<TModel>> subscriber);
     }
 }

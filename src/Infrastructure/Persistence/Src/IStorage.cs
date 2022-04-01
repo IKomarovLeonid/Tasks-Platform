@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Objects;
+using Persistence.Src.Events;
 
 namespace Persistence.Storage
 {
@@ -15,5 +16,7 @@ namespace Persistence.Storage
         Task<ICollection<TModel>> GetAllAsync(Expression<Func<TModel, bool>> query = null);
 
         Task<TModel> FindByIdAsync(ulong id);
+
+        IDisposable Subscribe(Action<StateEvent<TModel>> subscriber);
     }
 }
