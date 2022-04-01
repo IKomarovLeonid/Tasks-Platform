@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Core.API.Quartz;
 using Scheduler.Src;
 
 namespace Core.API.Ioc
@@ -14,6 +13,7 @@ namespace Core.API.Ioc
             builder.RegisterModule<ServicesModule>();
             builder.RegisterModule<MappingModule>();
             builder.RegisterModule<ScheduleModule>();
+            builder.RegisterModule<JobsModule>();
             
             return builder;
         }

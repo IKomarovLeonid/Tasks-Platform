@@ -20,6 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Scheduler\Scheduler.csproj" />
 	  <ProjectReference Include="..\..\Business\Processing\Processing.csproj" />
 	  <ProjectReference Include="..\..\Business\Queries\Queries.csproj" />
 	  <ProjectReference Include="..\..\Business\State\State.csproj" />

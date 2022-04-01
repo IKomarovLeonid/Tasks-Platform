@@ -5,7 +5,7 @@ namespace Objects.Settings
 {
     public class JobSettings
     {
-        public double CheckTaskExpirationJobSec { get; set; }
+        public int CheckTaskExpirationJobSec { get; set; }
 
         private static readonly IValidator<JobSettings> Validation = new JobsValidator();
 

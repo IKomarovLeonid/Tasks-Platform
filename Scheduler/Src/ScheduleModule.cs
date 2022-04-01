@@ -1,11 +1,9 @@
 ﻿using Autofac;
-using Processing.Jobs;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
-using Scheduler.Src;
 
-namespace Core.API.Quartz
+namespace Scheduler.Src
 {
     public class ScheduleModule : Module
     {
@@ -23,8 +21,6 @@ namespace Core.API.Quartz
                 scheduler.JobFactory = jobFactory;
                 return scheduler;
             });
-
-            builder.RegisterType<CheckTaskExpirationJob>().AsSelf().SingleInstance();
         }
     }
 }

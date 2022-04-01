@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.API.Quartz;
 using Environment;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
 using Persistence;
+using Scheduler.Src;
 using State.Commands.Settings;
 
 namespace Core.API.Startup
@@ -27,8 +27,8 @@ namespace Core.API.Startup
             try
             {
                 await MigrateAsync(cancellationToken);
-                await StartJobsAsync(cancellationToken);
                 await RunDefaultCommandsAsync(cancellationToken);
+                await StartJobsAsync(cancellationToken);
             }
             catch (Exception ex)
             {

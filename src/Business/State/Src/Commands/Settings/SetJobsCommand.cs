@@ -4,7 +4,7 @@ namespace State.Commands.Settings
 {
     public class SetJobsCommand : BaseCommand
     {
-        public double CheckTaskExpirationJobSec { get; set; }
+        public int CheckTaskExpirationJobSec { get; set; }
 
         public SetJobsCommand() : base(nameof(SetJobsCommand)) { }
     }
