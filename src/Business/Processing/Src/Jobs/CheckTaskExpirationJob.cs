@@ -25,7 +25,11 @@ namespace Processing.Jobs
         {
             var tasks = await _storage.GetAllAsync(t => t.State == RootState.Active && t.ExpirationUtc.HasValue);
 
-            if (tasks.Count == 0) return;
+            if (tasks.Count == 0)
+            {
+                _logger.Info("There are no active tasks to check");
+                return;
+            }
 
             _logger.Info($"Job checks '{tasks.Count}' tasks for expiration");
 
