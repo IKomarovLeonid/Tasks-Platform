@@ -1,27 +1,59 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
+using NLog;
+using Objects.Settings;
+using Persistence.Src.Events;
+using Persistence.Storage;
+using Scheduler.Src;
 
 namespace Processing.Listeners
 {
     public class JobsListener : IListener
     {
-        public JobsListener()
-        {
+        private readonly ISettingsStorage<BaseSettings> _storage;
+        private readonly QuartzService _quartz;
 
+        private IDisposable _subscription;
+
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(JobsListener));
+
+        public JobsListener(ISettingsStorage<BaseSettings> storage, QuartzService quartz)
+        {
+            _storage = storage;
+            _quartz = quartz;
         }
 
         public void Start()
         {
-            throw new NotImplementedException();
+            _subscription = _storage.Subscribe(ProcessEvents);
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            _subscription?.Dispose();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _subscription?.Dispose();
+        }
+
+        private void ProcessEvents(StateEvent<BaseSettings> stateEvent)
+        {
+            if(stateEvent.Type == StateEventType.Update)
+            {
+                _logger.Info("Job settings will be restarted");
+
+                Task.Run(() => OnUpdate(stateEvent))
+                    .ContinueWith(t => _logger.Error("Failed to restart jobs"),
+                    TaskContinuationOptions.OnlyOnFaulted);
+            }
+        }
+
+        private void OnUpdate(StateEvent<BaseSettings> stateEvent)
+        {
+            _quartz.RestartJobsAsync();
         }
     }
 }

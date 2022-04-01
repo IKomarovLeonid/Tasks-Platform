@@ -55,6 +55,8 @@ namespace Persistence.Storage
             entryEntry.CurrentValues.SetValues(model);
             await context.SaveChangesAsync();
 
+            _subject.OnNext(StateEvent<TModel>.Update(entryEntry.Entity));
+
             return entryEntry.Entity;
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NLog;
 using Objects.Settings;
 using Persistence.Storage;
 using Processing.Jobs;
@@ -13,6 +14,8 @@ namespace Core.API.Jobs
     public class JobsBuilder : IJobsBuilder
     {
         private readonly ISettingsStorage<BaseSettings> _storage;
+
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(JobBuilder));
 
         public JobsBuilder(ISettingsStorage<BaseSettings> storage)
         {
@@ -40,6 +43,8 @@ namespace Core.API.Jobs
                     .WithIntervalInSeconds(jobSettings.CheckTaskExpirationJobSec)
                     .RepeatForever())
                 .Build();
+
+            Logger.Info($"Check tasks expiration job has been created with interval '{jobSettings.CheckTaskExpirationJobSec}' seconds");
 
             jobs.Add(new JobDescription(trigger, jobDetail));
 

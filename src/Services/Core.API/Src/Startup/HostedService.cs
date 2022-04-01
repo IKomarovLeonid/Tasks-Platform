@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
 using Persistence;
+using Processing;
 using Scheduler.Src;
 using State.Commands.Settings;
 
@@ -29,6 +30,7 @@ namespace Core.API.Startup
                 await MigrateAsync(cancellationToken);
                 await RunDefaultCommandsAsync(cancellationToken);
                 await StartJobsAsync(cancellationToken);
+                StartListeners();
             }
             catch (Exception ex)
             {
@@ -86,6 +88,18 @@ namespace Core.API.Startup
             await mediator.SendAsync(new SetDefaultSettingsCommand());
 
             _logger.Info("Run default settings command has been finished");
+        }
+
+        private void StartListeners()
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var listeners = scope.ServiceProvider.GetServices<IListener>();
+
+            foreach(var listener in listeners)
+            {
+                listener.Start();
+            }
         }
     }
 }

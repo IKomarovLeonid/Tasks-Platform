@@ -28,6 +28,20 @@ namespace Scheduler.Src
             await _scheduler.Start();
         }
 
+        public async Task RestartJobsAsync()
+        {
+            await _scheduler?.Shutdown();
+
+            var jobs = await _builder.BuildJobs();
+
+            foreach (var job in jobs)
+            {
+                await _scheduler.ScheduleJob(job.JobDetail, job.Trigger);
+            }
+
+            await _scheduler.Start();
+        }
+
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             await _scheduler?.Shutdown();

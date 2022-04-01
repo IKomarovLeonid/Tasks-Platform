@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Core.API.Mapping;
 using Environment.Implementation;
+using Processing.Listeners;
 
 namespace Core.API.Ioc
 {
@@ -13,6 +14,8 @@ namespace Core.API.Ioc
 
             builder.RegisterType<DomainMediator>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<QueryMediator>().AsImplementedInterfaces().SingleInstance();
+
+            builder.RegisterType<JobsListener>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }
