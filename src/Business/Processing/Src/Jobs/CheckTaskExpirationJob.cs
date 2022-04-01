@@ -27,7 +27,7 @@ namespace Processing.Jobs
 
             if (tasks.Count == 0)
             {
-                _logger.Info("There are no active tasks to check");
+                _logger.Info("There are no active tasks to expiration check");
                 return;
             }
 
