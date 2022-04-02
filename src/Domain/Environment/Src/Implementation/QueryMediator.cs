@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Environment.Queries;
 using MediatR;
@@ -12,8 +13,9 @@ namespace Environment.Implementation
     {
         private readonly IMediator _mediator;
 
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(QueryMediator));
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(QueryMediator));
 
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
         public QueryMediator(IMediator mediator)
         {
@@ -24,16 +26,23 @@ namespace Environment.Implementation
         {
             try
             {
-                _logger.Info(JsonConvert.SerializeObject(query));
+                Logger.Info($"Execute find query: {JsonConvert.SerializeObject(query)}");
+
+                _stopwatch.Start();
 
                 var response = await _mediator.Send(query);
 
-                _logger.Info(JsonConvert.SerializeObject(response));
+                _stopwatch.Stop();
+
+                Logger.Info($"Response (elapsed: {_stopwatch.ElapsedMilliseconds} milliseconds) of find query: {JsonConvert.SerializeObject(response)}");
+
+                _stopwatch.Reset();
 
                 return response;
             }
             catch(Exception ex)
             {
+                _stopwatch.Reset();
                 return FindResult<TModel>.Error(ErrorCode.InternalError, message: ex.Message);
             }
         }
@@ -42,16 +51,23 @@ namespace Environment.Implementation
         {
             try
             {
-                _logger.Info(JsonConvert.SerializeObject(query));
+                Logger.Info($"Execute select query: {JsonConvert.SerializeObject(query)}");
+
+                _stopwatch.Start();
 
                 var response = await _mediator.Send(query);
 
-                _logger.Info(JsonConvert.SerializeObject(response));
+                _stopwatch.Stop();
+
+                Logger.Info($"Response (elapsed: {_stopwatch.ElapsedMilliseconds} milliseconds) of select query: {JsonConvert.SerializeObject(response)}");
+
+                _stopwatch.Reset();
 
                 return response;
             }
             catch(Exception ex)
             {
+                _stopwatch.Reset();
                 return SelectResult<TModel>.Error(ErrorCode.InternalError, message: ex.Message);
             }
         }

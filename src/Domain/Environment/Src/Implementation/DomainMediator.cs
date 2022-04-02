@@ -13,7 +13,7 @@ namespace Environment.Implementation
     {
         private readonly IMediator _mediator;
 
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(DomainMediator));
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(DomainMediator));
 
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
@@ -26,7 +26,7 @@ namespace Environment.Implementation
         {
             try
             {
-                _logger.Info($"Execute '{command.Name}': {JsonConvert.SerializeObject(command)}");
+                Logger.Info($"Execute state command: {JsonConvert.SerializeObject(command)}");
 
                 _stopwatch.Start();
 
@@ -34,7 +34,7 @@ namespace Environment.Implementation
 
                 _stopwatch.Stop();
 
-                _logger.Info($"Response (elapsed: {_stopwatch.ElapsedMilliseconds} milliseconds) of '{command.Name}': {JsonConvert.SerializeObject(response)}");
+                Logger.Info($"Response (elapsed: {_stopwatch.ElapsedMilliseconds} milliseconds) of state command: {JsonConvert.SerializeObject(response)}");
 
                 _stopwatch.Reset();
 

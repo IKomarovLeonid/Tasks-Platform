@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Environment.State;
 using MediatR;
@@ -8,7 +7,7 @@ using Objects.Settings;
 using Persistence.Storage;
 using State.Commands.Settings;
 
-namespace State.Src.Handlers.Settings
+namespace State.Handlers.Settings
 {
     public class SetDefaultSettingsHandler : IRequestHandler<SetDefaultSettingsCommand, StateResult>
     {

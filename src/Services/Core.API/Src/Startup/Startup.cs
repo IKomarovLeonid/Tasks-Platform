@@ -5,11 +5,11 @@ using Core.API.Ioc;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Converters;
 using Persistence;
 using Queries;
 using State;
-using State.Src;
 
 namespace Core.API.Startup
 {
@@ -36,6 +36,15 @@ namespace Core.API.Startup
                 settings.AllowReferencesWithProperties = true;
                 settings.Title = "Tasks-Platform";
             });
+
+            services.AddLogging(
+                builder =>
+                {
+                    builder.AddFilter("Microsoft", LogLevel.Warning)
+                        .AddFilter("System", LogLevel.Warning)
+                        .AddFilter("NToastNotify", LogLevel.Warning)
+                        .AddConsole();
+                });
 
             var builder = AutofacBuilder.Build();
 
