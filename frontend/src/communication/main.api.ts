@@ -142,7 +142,7 @@ export class TasksApi {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    get(scope?: VisibleScope | undefined): Observable<PageViewModelOfTaskDto> {
+    get(scope?: VisibleScope | undefined): Observable<PageViewModelOfTaskViewModel> {
         let url_ = this.baseUrl + "/api/tasks?";
         if (scope === null)
             throw new Error("The parameter 'scope' cannot be null.");
@@ -165,14 +165,14 @@ export class TasksApi {
                 try {
                     return this.processGet(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PageViewModelOfTaskDto>;
+                    return _observableThrow(e) as any as Observable<PageViewModelOfTaskViewModel>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PageViewModelOfTaskDto>;
+                return _observableThrow(response_) as any as Observable<PageViewModelOfTaskViewModel>;
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<PageViewModelOfTaskDto> {
+    protected processGet(response: HttpResponseBase): Observable<PageViewModelOfTaskViewModel> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -183,7 +183,7 @@ export class TasksApi {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PageViewModelOfTaskDto.fromJS(resultData200);
+            result200 = PageViewModelOfTaskViewModel.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -191,7 +191,7 @@ export class TasksApi {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<PageViewModelOfTaskDto>(null as any);
+        return _observableOf<PageViewModelOfTaskViewModel>(null as any);
     }
 
     create(request: CreateTaskRequestModel): Observable<AffectionViewModel> {
@@ -494,10 +494,10 @@ export interface IAffectionViewModel {
     timeUtc?: string;
 }
 
-export class PageViewModelOfTaskDto implements IPageViewModelOfTaskDto {
-    items?: TaskDto[] | undefined;
+export class PageViewModelOfTaskViewModel implements IPageViewModelOfTaskViewModel {
+    items?: TaskViewModel[] | undefined;
 
-    constructor(data?: IPageViewModelOfTaskDto) {
+    constructor(data?: IPageViewModelOfTaskViewModel) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -511,14 +511,14 @@ export class PageViewModelOfTaskDto implements IPageViewModelOfTaskDto {
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
-                    this.items!.push(TaskDto.fromJS(item));
+                    this.items!.push(TaskViewModel.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): PageViewModelOfTaskDto {
+    static fromJS(data: any): PageViewModelOfTaskViewModel {
         data = typeof data === 'object' ? data : {};
-        let result = new PageViewModelOfTaskDto();
+        let result = new PageViewModelOfTaskViewModel();
         result.init(data);
         return result;
     }
@@ -533,140 +533,16 @@ export class PageViewModelOfTaskDto implements IPageViewModelOfTaskDto {
         return data;
     }
 
-    clone(): PageViewModelOfTaskDto {
+    clone(): PageViewModelOfTaskViewModel {
         const json = this.toJSON();
-        let result = new PageViewModelOfTaskDto();
+        let result = new PageViewModelOfTaskViewModel();
         result.init(json);
         return result;
     }
 }
 
-export interface IPageViewModelOfTaskDto {
-    items?: TaskDto[] | undefined;
-}
-
-export abstract class RootDto implements IRootDto {
-    id?: number;
-    state?: RootState;
-    isActive?: boolean;
-    createdUtc?: string;
-    updatedUtc?: string;
-
-    constructor(data?: IRootDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.state = _data["state"];
-            this.isActive = _data["isActive"];
-            this.createdUtc = _data["createdUtc"];
-            this.updatedUtc = _data["updatedUtc"];
-        }
-    }
-
-    static fromJS(data: any): RootDto {
-        data = typeof data === 'object' ? data : {};
-        throw new Error("The abstract class 'RootDto' cannot be instantiated.");
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["state"] = this.state;
-        data["isActive"] = this.isActive;
-        data["createdUtc"] = this.createdUtc;
-        data["updatedUtc"] = this.updatedUtc;
-        return data;
-    }
-
-    clone(): RootDto {
-        throw new Error("The abstract class 'RootDto' cannot be instantiated.");
-    }
-}
-
-export interface IRootDto {
-    id?: number;
-    state?: RootState;
-    isActive?: boolean;
-    createdUtc?: string;
-    updatedUtc?: string;
-}
-
-export class TaskDto extends RootDto implements ITaskDto {
-    title?: string | undefined;
-    description?: string | undefined;
-    status?: TaskStatus;
-    expirationUtc?: string | undefined;
-
-    constructor(data?: ITaskDto) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.title = _data["title"];
-            this.description = _data["description"];
-            this.status = _data["status"];
-            this.expirationUtc = _data["expirationUtc"];
-        }
-    }
-
-    static fromJS(data: any): TaskDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TaskDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["title"] = this.title;
-        data["description"] = this.description;
-        data["status"] = this.status;
-        data["expirationUtc"] = this.expirationUtc;
-        super.toJSON(data);
-        return data;
-    }
-
-    clone(): TaskDto {
-        const json = this.toJSON();
-        let result = new TaskDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITaskDto extends IRootDto {
-    title?: string | undefined;
-    description?: string | undefined;
-    status?: TaskStatus;
-    expirationUtc?: string | undefined;
-}
-
-export enum TaskStatus {
-    NotDefined = "NotDefined",
-    Pending = "Pending",
-    Processing = "Processing",
-    Expired = "Expired",
-    Processed = "Processed",
-}
-
-export enum RootState {
-    Active = "Active",
-    Archived = "Archived",
-}
-
-export enum VisibleScope {
-    Active = "Active",
-    All = "All",
+export interface IPageViewModelOfTaskViewModel {
+    items?: TaskViewModel[] | undefined;
 }
 
 export class TaskViewModel implements ITaskViewModel {
@@ -738,6 +614,24 @@ export interface ITaskViewModel {
     expirationUtc?: string | undefined;
     createdUtc?: string;
     updatedUtc?: string;
+}
+
+export enum RootState {
+    Active = "Active",
+    Archived = "Archived",
+}
+
+export enum TaskStatus {
+    NotDefined = "NotDefined",
+    Pending = "Pending",
+    Processing = "Processing",
+    Expired = "Expired",
+    Processed = "Processed",
+}
+
+export enum VisibleScope {
+    Active = "Active",
+    All = "All",
 }
 
 export class CreateTaskRequestModel implements ICreateTaskRequestModel {
