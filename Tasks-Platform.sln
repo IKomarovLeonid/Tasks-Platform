@@ -31,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{334F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler", "src\Modules\Scheduler\Scheduler.csproj", "{01374D22-7018-4AAB-BB0C-5ED330BADCD2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7D1A1EE4-CFAB-4813-82EC-7E2AAAB3FD6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration", "src\Tests\Integration\Integration.csproj", "{3EF9AD6B-9823-428E-B1E0-CD6A69BD7484}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,10 @@ Global
 		{01374D22-7018-4AAB-BB0C-5ED330BADCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01374D22-7018-4AAB-BB0C-5ED330BADCD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01374D22-7018-4AAB-BB0C-5ED330BADCD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EF9AD6B-9823-428E-B1E0-CD6A69BD7484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF9AD6B-9823-428E-B1E0-CD6A69BD7484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF9AD6B-9823-428E-B1E0-CD6A69BD7484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF9AD6B-9823-428E-B1E0-CD6A69BD7484}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +95,7 @@ Global
 		{E2D64554-E164-4C1A-82DD-C8D486E4B5B3} = {AD1E2E24-652B-4212-926C-6855D77FAEC4}
 		{E0E19276-A911-4118-B132-1D7A8F2BB529} = {E5116D90-BAB5-4AB4-99F5-4BD9CED6B801}
 		{01374D22-7018-4AAB-BB0C-5ED330BADCD2} = {334F862F-4EC6-41BC-A3BC-D2F9B78DAAF5}
+		{3EF9AD6B-9823-428E-B1E0-CD6A69BD7484} = {7D1A1EE4-CFAB-4813-82EC-7E2AAAB3FD6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBBC24FA-4A11-4704-9000-CAE98ECB2459}
