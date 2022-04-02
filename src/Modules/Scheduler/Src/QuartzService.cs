@@ -28,18 +28,11 @@ namespace Scheduler
             await _scheduler.Start();
         }
 
-        public async Task RestartJobsAsync()
+        public async Task RestartJobsAsync(CancellationToken cancellationToken = default)
         {
-            await _scheduler?.Shutdown();
+            await _scheduler.Clear(cancellationToken);
 
-            var jobs = await _builder.BuildJobs();
-
-            foreach (var job in jobs)
-            {
-                await _scheduler.ScheduleJob(job.JobDetail, job.Trigger);
-            }
-
-            await _scheduler.Start();
+            await StartAsync(cancellationToken);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

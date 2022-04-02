@@ -16,7 +16,7 @@ namespace Core.API.Startup
     {
         private readonly IServiceScopeFactory _scopeFactory;
 
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(HostedService));
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(HostedService));
 
         public HostedService(IServiceScopeFactory factory)
         {
@@ -34,7 +34,7 @@ namespace Core.API.Startup
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                Logger.Error(ex);
             }
         }
 
@@ -46,7 +46,7 @@ namespace Core.API.Startup
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                Logger.Error(ex);
             }
         }
 
@@ -83,11 +83,11 @@ namespace Core.API.Startup
 
             var mediator = scope.ServiceProvider.GetRequiredService<IDomainMediator>();
 
-            _logger.Info("Run default settings command...");
+            Logger.Info("Run default settings command...");
 
             await mediator.SendAsync(new SetDefaultSettingsCommand());
 
-            _logger.Info("Run default settings command has been finished");
+            Logger.Info("Run default settings command has been finished");
         }
 
         private void StartListeners()
