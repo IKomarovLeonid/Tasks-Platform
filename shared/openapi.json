@@ -83,7 +83,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageViewModelOfTaskDto"
+                  "$ref": "#/components/schemas/PageViewModelOfTaskViewModel"
                 }
               }
             }
@@ -253,7 +253,7 @@
           }
         }
       },
-      "PageViewModelOfTaskDto": {
+      "PageViewModelOfTaskViewModel": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -261,106 +261,10 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/TaskDto"
+              "$ref": "#/components/schemas/TaskViewModel"
             }
           }
         }
-      },
-      "TaskDto": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/RootDto"
-          },
-          {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "title": {
-                "type": "string",
-                "nullable": true
-              },
-              "description": {
-                "type": "string",
-                "nullable": true
-              },
-              "status": {
-                "$ref": "#/components/schemas/TaskStatus"
-              },
-              "expirationUtc": {
-                "type": "string",
-                "format": "date-time",
-                "nullable": true
-              }
-            }
-          }
-        ]
-      },
-      "TaskStatus": {
-        "type": "string",
-        "description": "",
-        "x-enumNames": [
-          "NotDefined",
-          "Pending",
-          "Processing",
-          "Expired",
-          "Processed"
-        ],
-        "enum": [
-          "NotDefined",
-          "Pending",
-          "Processing",
-          "Expired",
-          "Processed"
-        ]
-      },
-      "RootDto": {
-        "type": "object",
-        "x-abstract": true,
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "state": {
-            "$ref": "#/components/schemas/RootState"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "createdUtc": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedUtc": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "RootState": {
-        "type": "string",
-        "description": "",
-        "x-enumNames": [
-          "Active",
-          "Archived"
-        ],
-        "enum": [
-          "Active",
-          "Archived"
-        ]
-      },
-      "VisibleScope": {
-        "type": "string",
-        "description": "",
-        "x-enumNames": [
-          "Active",
-          "All"
-        ],
-        "enum": [
-          "Active",
-          "All"
-        ]
       },
       "TaskViewModel": {
         "type": "object",
@@ -398,6 +302,48 @@
             "format": "date-time"
           }
         }
+      },
+      "RootState": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Active",
+          "Archived"
+        ],
+        "enum": [
+          "Active",
+          "Archived"
+        ]
+      },
+      "TaskStatus": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "NotDefined",
+          "Pending",
+          "Processing",
+          "Expired",
+          "Processed"
+        ],
+        "enum": [
+          "NotDefined",
+          "Pending",
+          "Processing",
+          "Expired",
+          "Processed"
+        ]
+      },
+      "VisibleScope": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "Active",
+          "All"
+        ],
+        "enum": [
+          "Active",
+          "All"
+        ]
       },
       "CreateTaskRequestModel": {
         "type": "object",

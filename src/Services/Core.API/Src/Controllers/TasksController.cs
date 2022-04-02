@@ -27,18 +27,18 @@ namespace Core.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PageViewModel<TaskDto>>> GetAsync(VisibleScope scope)
+        public async Task<ActionResult<PageViewModel<TaskViewModel>>> GetAsync(VisibleScope scope)
         {
-            var result = await _queryMediator.SelectAsync<TaskDto>(new SelectQuery<TaskDto>(scope));
+            var result = await _queryMediator.SelectAsync(new SelectQuery<TaskDto>(scope));
 
-            return PageViewModel<TaskDto>.New(result.Data);
+            return _viewMapper.ToView<TaskDto, TaskViewModel>(result);
         }
 
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskViewModel>> GetByIdAsync(ulong id)
         {
-            var result = await _queryMediator.FindAsync<TaskDto>(new FindQuery<TaskDto>(id));
+            var result = await _queryMediator.FindAsync(new FindQuery<TaskDto>(id));
 
             return _viewMapper.ToView<TaskDto, TaskViewModel>(result);
         }
