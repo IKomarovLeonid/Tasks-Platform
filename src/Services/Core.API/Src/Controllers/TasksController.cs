@@ -4,7 +4,6 @@ using Core.API.View;
 using Core.API.View.Tasks;
 using Environment;
 using Environment.Queries;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Common;
 using Objects.Dto;

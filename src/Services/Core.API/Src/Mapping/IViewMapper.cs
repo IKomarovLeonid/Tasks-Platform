@@ -2,8 +2,6 @@
 using Environment.Queries;
 using Environment.State;
 using Microsoft.AspNetCore.Mvc;
-using Queries;
-using State;
 
 namespace Core.API.Mapping
 {
