@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Environment.Events;
 using NLog;
 using Objects.Settings;
-using Persistence.Src.Events;
 using Persistence.Storage;
 using Scheduler;
 
@@ -15,7 +15,7 @@ namespace Processing.Listeners
 
         private IDisposable _subscription;
 
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(JobsListener));
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(JobsListener));
 
         public JobsListener(ISettingsStorage<BaseSettings> storage, QuartzService quartz)
         {
@@ -42,10 +42,10 @@ namespace Processing.Listeners
         {
             if(stateEvent.Type == StateEventType.Update)
             {
-                _logger.Info("Job settings will be restarted");
+                Logger.Info("Job settings will be restarted");
 
                 Task.Run(() => OnUpdate(stateEvent))
-                    .ContinueWith(t => _logger.Error("Failed to restart jobs"),
+                    .ContinueWith(t => Logger.Error("Failed to restart jobs"),
                     TaskContinuationOptions.OnlyOnFaulted);
             }
         }

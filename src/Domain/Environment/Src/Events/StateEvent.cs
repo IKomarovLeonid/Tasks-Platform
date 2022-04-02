@@ -1,13 +1,10 @@
-﻿using System;
-using Objects;
-
-namespace Persistence.Src.Events
+﻿namespace Environment.Events
 {
     public class StateEvent<TModel> where TModel: class
     {
-        public TModel Data { get; private set; }
+        public TModel Data { get; private init; }
 
-        public StateEventType Type { get; private set; }
+        public StateEventType Type { get; private init; }
 
         private StateEvent() { }
 

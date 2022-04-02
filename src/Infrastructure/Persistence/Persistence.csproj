@@ -13,14 +13,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\Domain\Environment\Environment.csproj" />
 	  <ProjectReference Include="..\..\Domain\Objects\Objects.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Remove="Src\Events\" />
 	  <None Remove="System.Reactive" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Src\Events\" />
 	</ItemGroup>
 </Project>
