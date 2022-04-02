@@ -1,6 +1,6 @@
 ﻿using Quartz;
 
-namespace Scheduler.Src
+namespace Scheduler
 {
     public class JobDescription
     {

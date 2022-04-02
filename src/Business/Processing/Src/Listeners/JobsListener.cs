@@ -5,7 +5,7 @@ using NLog;
 using Objects.Settings;
 using Persistence.Src.Events;
 using Persistence.Storage;
-using Scheduler.Src;
+using Scheduler;
 
 namespace Processing.Listeners
 {

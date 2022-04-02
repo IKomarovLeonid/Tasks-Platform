@@ -7,7 +7,7 @@ using Objects.Settings;
 using Persistence.Storage;
 using Processing.Jobs;
 using Quartz;
-using Scheduler.Src;
+using Scheduler;
 
 namespace Core.API.Jobs
 {

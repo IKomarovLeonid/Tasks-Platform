@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Scheduler.Src
+namespace Scheduler
 {
     public interface IJobsBuilder
     {

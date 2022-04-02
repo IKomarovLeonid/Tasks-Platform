@@ -3,7 +3,7 @@ using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
 
-namespace Scheduler.Src
+namespace Scheduler
 {
     public class ScheduleModule : Module
     {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Quartz;
 
-namespace Scheduler.Src
+namespace Scheduler
 {
     public class QuartzService : IHostedService
     {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using NLog;
 using Persistence;
 using Processing;
-using Scheduler.Src;
+using Scheduler;
 using State.Commands.Settings;
 
 namespace Core.API.Startup

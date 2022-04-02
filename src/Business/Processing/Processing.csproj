@@ -5,9 +5,9 @@
   </PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Scheduler\Scheduler.csproj" />
 	  <ProjectReference Include="..\..\Domain\Environment\Environment.csproj" />
 	  <ProjectReference Include="..\..\Domain\Objects\Objects.csproj" />
 	  <ProjectReference Include="..\..\Infrastructure\Persistence\Persistence.csproj" />
+	  <ProjectReference Include="..\..\Modules\Scheduler\Scheduler.csproj" />
 	</ItemGroup>
 </Project>

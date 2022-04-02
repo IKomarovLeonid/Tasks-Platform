@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Scheduler.Src;
+using Scheduler;
 
 namespace Core.API.Ioc
 {

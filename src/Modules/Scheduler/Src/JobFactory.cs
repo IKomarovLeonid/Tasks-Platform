@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Spi;
 
-namespace Scheduler.Src
+namespace Scheduler
 {
     internal class JobFactory : IJobFactory
     {
