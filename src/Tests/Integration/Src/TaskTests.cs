@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using Integration.Helpers;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Integration
@@ -16,7 +19,7 @@ namespace Integration
         {
             _client = new HttpClient();
 
-            _client.BaseAddress = new Uri("http://localhost:8080");
+            _client.BaseAddress = new Uri("http://localhost:8080/api/");
 
             _client.DefaultRequestHeaders.Add("accept", "application/json");
         }
@@ -30,92 +33,149 @@ namespace Integration
         [OneTimeSetUp]
         public async Task OneTimeSetup()
         {
-            var response = await _client.GetAsync("/api/ping");
+            var response = await _client.GetAsync("ping");
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
         [Test]
         public async Task User_CanCreateTask_Success()
         {
+            var title = "Tests task";
+            var description = "My task for research";
+            var time = DateTime.UtcNow.AddHours(5);
+
             var data = new Dictionary<string, string>
             {
-                {"title", "Tests task"},
-                {"description", "My task for research" }
+                {"title", title},
+                {"description", description },
+                {"ExpirationUtc", $"{time}"}
             };
 
+            var response = await _client.PostDataAsync("tasks", data);
 
-            var response = await _client.PostAsync("/api/tasks", new FormUrlEncodedContent(data));
+            var responseData = await response.Content.ReadAsStringAsync();
 
-            var responseData = await response.Content.ReadAsStreamAsync();
+            var id = ResponseHelper.GetDataFromResponse<int>(responseData, "id");
+            var affected = ResponseHelper.GetDataFromResponse<DateTime>(responseData, "timeUtc");
+
+            Assert.That(id, Is.GreaterThan(0));
+            Assert.That(affected, Is.GreaterThanOrEqualTo(DateTime.UtcNow.AddSeconds(-1)));
+            Assert.That(affected, Is.LessThanOrEqualTo(DateTime.UtcNow));
             
         }
 
         [Test]
-        public void User_CanViewTask_Success()
+        public async Task User_CanViewTask_Success()
         {
+            // arrange
+            var title = "Tests task";
+            var description = "My task for research";
+            var time = DateTime.UtcNow.AddHours(5);
+
+            var data = new Dictionary<string, string>
+            {
+                {"title", title},
+                {"description", description },
+                {"ExpirationUtc", $"{time}"}
+            };
+
+            var response = await _client.PostDataAsync("tasks", data);
+
+            var responseData = await response.Content.ReadAsStringAsync();
+
+            var id = ResponseHelper.GetDataFromResponse<int>(responseData, "id");
+
+            // act
+            var model = await _client.GetAsync($"tasks/{id}");
+
+            var taskModel = await model.Content.ReadAsStringAsync();
             
+            var titleActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "title");
+            var descriptionActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "description");
+            var expirationActual = ResponseHelper.GetDataFromResponse<DateTime>(taskModel, "expirationUtc");
+            var state = ResponseHelper.GetDataFromResponse<string>(taskModel, "state");
+
+            // assert
+            Assert.That(titleActual, Is.EqualTo(title));
+            Assert.That(descriptionActual, Is.EqualTo(description));
+            Assert.That(expirationActual, Is.EqualTo(time).Within(TimeSpan.FromSeconds(1)));
+            Assert.That(state, Is.EqualTo("Active"));
         }
 
         [Test]
         public async Task User_CanViewAllTasks_Success()
         {
-            // arrange 
-            var data = new Dictionary<string, string>
-            {
-                {"title", "Tests task"},
-                {"description", "My task for research" }
-            };
-
-            await _client.PostAsync("/api/tasks", new FormUrlEncodedContent(data));
+            // arrange
+            var taskId1 = await _client.PostDefaultTaskAsync();
+            var taskId2 = await _client.PostDefaultTaskAsync();
 
             // act
-            var response = await _client.GetAsync("api/tasks");
+            var model = await _client.GetAsync($"tasks/");
+
+            var tasks = await model.Content.ReadAsStringAsync();
+
+            var items = ResponseHelper.GetDataFromResponse<string>(tasks, "items");
 
             // assert
+            Assert.That(items.Length, Is.GreaterThan(0));
+
         }
 
         [Test]
         public async Task User_CanUpdateTask_Success()
         {
-            // arrange 
+            // arrange
+            var title = "Updated title";
+            var description = "My updated description";
+            var time = DateTime.UtcNow.AddHours(6);
+            var status = "Processing";
+
+            var taskId = await _client.PostDefaultTaskAsync();
+
             var data = new Dictionary<string, string>
             {
-                {"title", "Tests task"},
-                {"description", "My task for research" }
+                {"title", $"{title}"},
+                {"ExpirationUtc", $"{time}"},
+                {"description", $"{description}" },
+                {"status", $"{status}"}
             };
-
-            var affected = await _client.PostAsync("/api/tasks", new FormUrlEncodedContent(data));
 
             // act
-            var updateRequest = new Dictionary<string, string>
-            {
-                {"title", "Tests task"},
-                {"description", "My task for research" },
-                {"id", "1"}
-            };
+            await _client.PatchDataAsync($"tasks/{taskId}", data);
 
-            var response = await _client.PatchAsync("api/tasks", new FormUrlEncodedContent(updateRequest));
+            var model = await _client.GetAsync($"tasks/{taskId}");
+
+            var taskModel = await model.Content.ReadAsStringAsync();
+
+            var titleActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "title");
+            var descriptionActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "description");
+            var expirationActual = ResponseHelper.GetDataFromResponse<DateTime>(taskModel, "expirationUtc");
+            var statusActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "status");
 
             // assert
+            Assert.That(titleActual, Is.EqualTo(title));
+            Assert.That(descriptionActual, Is.EqualTo(description));
+            Assert.That(expirationActual, Is.EqualTo(time).Within(TimeSpan.FromSeconds(1)));
+            Assert.That(statusActual, Is.EqualTo(status));
         }
 
         [Test]
         public async Task User_CanArchiveTask_Success()
         {
             // arrange 
-            var data = new Dictionary<string, string>
-            {
-                {"title", "Tests task"},
-                {"description", "My task for research" }
-            };
-
-            var affected = await _client.PostAsync("/api/tasks", new FormUrlEncodedContent(data));
+            var taskId = await _client.PostDefaultTaskAsync();
 
             // act
-            var response = await _client.DeleteAsync("api/tasks/{1}");
+            await _client.DeleteAsync($"tasks/{taskId}");
+
+            var model = await _client.GetAsync($"tasks/{taskId}");
+
+            var taskModel = await model.Content.ReadAsStringAsync();
 
             // assert
+            var state = ResponseHelper.GetDataFromResponse<string>(taskModel, "state");
 
+            Assert.That(state, Is.EqualTo("Archived"));
 
         }
     }

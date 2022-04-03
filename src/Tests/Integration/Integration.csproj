@@ -15,7 +15,4 @@
   <ItemGroup>
     <None Remove="Src\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Src\" />
-  </ItemGroup>
 </Project>
