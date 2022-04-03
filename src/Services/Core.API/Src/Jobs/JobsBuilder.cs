@@ -48,6 +48,22 @@ namespace Core.API.Jobs
 
             jobs.Add(new JobDescription(trigger, jobDetail));
 
+            var jobDetailCaches = JobBuilder.Create<CheckTaskExpirationJob>()
+                .WithIdentity("ReloadCachesJob", "group1")
+                .Build();
+
+            ITrigger triggerCaches = TriggerBuilder.Create()
+                .WithIdentity("cachesTrigger", "group1")
+                .StartNow()
+                .WithSimpleSchedule(x => x
+                    .WithIntervalInSeconds(jobSettings.ReloadCachesJobSec)
+                    .RepeatForever())
+                .Build();
+
+            Logger.Info($"Reload caches job has been created with interval '{jobSettings.CheckTaskExpirationJobSec}' seconds");
+
+            jobs.Add(new JobDescription(triggerCaches, jobDetailCaches));
+
             return jobs;
         } 
     }

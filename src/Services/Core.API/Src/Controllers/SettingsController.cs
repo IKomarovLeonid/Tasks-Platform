@@ -36,7 +36,8 @@ namespace Core.API.Controllers
         {
             var result = await _mediator.SendAsync(new SetJobsCommand()
             {
-                CheckTaskExpirationJobSec = model.CheckTaskExpirationJobSec
+                CheckTaskExpirationJobSec = model.CheckTaskExpirationJobSec,
+                ReloadCachesJobSec = model.ReloadCachesJobSec
             });
 
             return _viewMapper.ToView(result);

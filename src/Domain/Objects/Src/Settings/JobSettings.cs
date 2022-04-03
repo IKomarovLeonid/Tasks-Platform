@@ -7,6 +7,8 @@ namespace Objects.Settings
     {
         public int CheckTaskExpirationJobSec { get; set; }
 
+        public int ReloadCachesJobSec { get; set; }
+
         private static readonly IValidator<JobSettings> Validation = new JobsValidator();
 
         public ValidationResult Validate()
@@ -23,6 +25,11 @@ namespace Objects.Settings
                 .NotNull()
                 .GreaterThan(0)
                 .LessThanOrEqualTo(84000);
+
+            RuleFor(t => t.ReloadCachesJobSec)
+             .NotNull()
+             .GreaterThan(0)
+             .LessThanOrEqualTo(84000);
         }
     }
 

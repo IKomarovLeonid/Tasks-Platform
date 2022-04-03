@@ -31,7 +31,8 @@ namespace State.Handlers.Settings
         {
             var settings = new JobSettings()
             {
-                CheckTaskExpirationJobSec = 50
+                CheckTaskExpirationJobSec = 50,
+                ReloadCachesJobSec = 60
             };
 
             var baseSettings = new BaseSettings()

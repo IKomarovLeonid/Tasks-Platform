@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Core.API.Jobs;
 using Processing.Jobs;
+using Processing.Src.Jobs;
 
 namespace Core.API.Ioc
 {
@@ -11,6 +12,7 @@ namespace Core.API.Ioc
             builder.RegisterType<JobsBuilder>().AsImplementedInterfaces().SingleInstance();
 
             builder.RegisterType<CheckTaskExpirationJob>().AsSelf().SingleInstance();
+            builder.RegisterType<ReloadCachesJob>().AsSelf().SingleInstance();
         }
     }
 }

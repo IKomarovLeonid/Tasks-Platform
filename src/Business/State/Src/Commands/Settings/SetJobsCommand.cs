@@ -6,6 +6,8 @@ namespace State.Commands.Settings
     {
         public int CheckTaskExpirationJobSec { get; set; }
 
+        public int ReloadCachesJobSec { get; set; }
+
         public SetJobsCommand() : base(nameof(SetJobsCommand)) { }
     }
 }
