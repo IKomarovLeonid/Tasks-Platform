@@ -15,6 +15,8 @@ namespace Integration.Helpers
 
             var response = await client.PostAsync(url, new StringContent(obj, Encoding.UTF8, "application/json"));
 
+            await CheckResponseAsync(response, obj);
+
             return response;
         }
 
@@ -23,6 +25,8 @@ namespace Integration.Helpers
             var obj = JsonConvert.SerializeObject(data);
 
             var response = await client.PatchAsync(url, new StringContent(obj, Encoding.UTF8, "application/json"));
+
+            await CheckResponseAsync(response, obj);
 
             return response;
         }
@@ -38,11 +42,22 @@ namespace Integration.Helpers
 
             var response = await client.PostDataAsync("tasks", data);
 
+            await CheckResponseAsync(response, data.ToString());
+
             var responseData = await response.Content.ReadAsStringAsync();
 
             var id = ResponseHelper.GetDataFromResponse<ulong>(responseData, "id");
 
             return id;
+        }
+
+        private static async Task CheckResponseAsync(HttpResponseMessage response, string request)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Failed to send request '{request}'. Response code: {await response.Content.ReadAsStringAsync()}");
+            }
+            
         }
     }
 }

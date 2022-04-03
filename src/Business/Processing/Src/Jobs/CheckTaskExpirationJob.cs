@@ -46,7 +46,7 @@ namespace Processing.Jobs
                     await _storage.UpdateAsync(task);
                     continue;
                 }
-                _logger.Info($"Task #{task.Id} does not expired");
+                _logger.Info($"Task #{task.Id} (expiration utc: '{task.ExpirationUtc}') does not expired. Current utc time: '{time}' ");
             }
 
             _logger.Info($"Job has checked '{tasks.Count}' tasks for expiration");
