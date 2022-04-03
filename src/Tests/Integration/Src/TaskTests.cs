@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Integration.Helpers;
 using NUnit.Framework;
+using TasksPlatform.Shared.API;
+using TaskStatus = TasksPlatform.Shared.API.TaskStatus;
 
 namespace Integration
 {
@@ -11,142 +13,94 @@ namespace Integration
         [Test]
         public async Task User_CanCreateTask_Success()
         {
-            const string title = "Creation task";
-            const string description = "My task for research";
-            var time = DateTime.UtcNow.AddHours(5);
+            var request = RequestsFactory.DefaultCreateTaskRequest();
 
-            var data = new Dictionary<string, string>
-            {
-                {"title", title},
-                {"description", description },
-                {"ExpirationUtc", $"{time}"}
-            };
+            var response = await Client.Tasks.CreateAsync(request);
 
-            var response = await Client.PostDataAsync("tasks", data);
-
-            var responseData = await response.Content.ReadAsStringAsync();
-
-            var id = ResponseHelper.GetDataFromResponse<int>(responseData, "id");
-            var affected = ResponseHelper.GetDataFromResponse<DateTime>(responseData, "timeUtc");
-
-            Assert.That(id, Is.GreaterThan(0));
-            Assert.That(affected, Is.GreaterThanOrEqualTo(DateTime.UtcNow.AddSeconds(-1)));
-            Assert.That(affected, Is.LessThanOrEqualTo(DateTime.UtcNow));
-            
+            Assert.That(response.Id, Is.GreaterThan(0));
+            Assert.That(response.TimeUtc, Is.GreaterThanOrEqualTo(DateTime.UtcNow.AddSeconds(-1)));
+            Assert.That(response.TimeUtc, Is.LessThanOrEqualTo(DateTime.UtcNow));
         }
 
         [Test]
         public async Task User_CanViewTask_Success()
         {
             // arrange
-            var title = "Tests task";
-            var description = "My task for research";
-            var time = DateTime.UtcNow.AddHours(5);
-
-            var data = new Dictionary<string, string>
-            {
-                {"title", title},
-                {"description", description },
-                {"ExpirationUtc", $"{time}"}
-            };
-
-            var response = await Client.PostDataAsync("tasks", data);
-
-            var responseData = await response.Content.ReadAsStringAsync();
-
-            var id = ResponseHelper.GetDataFromResponse<int>(responseData, "id");
+            var request = RequestsFactory.DefaultCreateTaskRequest();
+            var taskId = await Client.Tasks.CreateAsync(request);
 
             // act
-            var model = await Client.GetAsync($"tasks/{id}");
-
-            var taskModel = await model.Content.ReadAsStringAsync();
-            
-            var titleActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "title");
-            var descriptionActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "description");
-            var expirationActual = ResponseHelper.GetDataFromResponse<DateTime>(taskModel, "expirationUtc");
-            var state = ResponseHelper.GetDataFromResponse<string>(taskModel, "state");
+            var taskModel = await Client.Tasks.GetByIdAsync(taskId.Id.Value);
 
             // assert
-            Assert.That(titleActual, Is.EqualTo(title));
-            Assert.That(descriptionActual, Is.EqualTo(description));
-            Assert.That(expirationActual, Is.EqualTo(time).Within(TimeSpan.FromSeconds(1)));
-            Assert.That(state, Is.EqualTo("Active"));
+            Assert.That(taskModel.Title, Is.EqualTo(request.Title));
+            Assert.That(taskModel.Description, Is.EqualTo(request.Description));
+            Assert.That(taskModel.Status, Is.EqualTo(TaskStatus.Pending));
+            Assert.That(taskModel.State, Is.EqualTo(RootState.Active));
+            Assert.That(taskModel.CreatedUtc, Is.GreaterThan(DateTime.UtcNow.AddSeconds(-2)));
+            Assert.That(taskModel.UpdatedUtc, Is.GreaterThan(DateTime.UtcNow.AddSeconds(-2)));
+            Assert.That(taskModel.ExpirationUtc, Is.EqualTo(request.ExpirationUtc).Within(TimeSpan.FromSeconds(1)));
         }
 
         [Test]
         public async Task User_CanViewAllTasks_Success()
         {
             // arrange
-            var taskId1 = await Client.PostDefaultTaskAsync();
-            var taskId2 = await Client.PostDefaultTaskAsync();
+            var request = RequestsFactory.DefaultCreateTaskRequest();
+            var taskId1 = await Client.Tasks.CreateAsync(request);
+            var taskId2 = await Client.Tasks.CreateAsync(request);
 
             // act
-            var model = await Client.GetAsync($"tasks/");
-
-            var tasks = await model.Content.ReadAsStringAsync();
-
-            var items = ResponseHelper.GetDataFromResponse<string>(tasks, "items");
+            var page = await Client.Tasks.GetAsync(VisibleScope.Active);
+            var tasks = page.Items;
 
             // assert
-            Assert.That(items.Length, Is.GreaterThan(0));
-
+            Assert.That(tasks.Count(t => t.Id == taskId1.Id.Value), Is.EqualTo(1));
+            Assert.That(tasks.Count(t => t.Id == taskId2.Id.Value), Is.EqualTo(1));
         }
 
         [Test]
         public async Task User_CanUpdateTask_Success()
         {
             // arrange
-            var title = "Updated title";
-            var description = "My updated description";
-            var time = DateTime.UtcNow.AddHours(6);
-            var status = "Processing";
+            var request = RequestsFactory.DefaultCreateTaskRequest();
+            var task = await Client.Tasks.CreateAsync(request);
 
-            var taskId = await Client.PostDefaultTaskAsync();
-
-            var data = new Dictionary<string, string>
+            var patchRequest = new UpdateTaskRequestModel()
             {
-                {"title", $"{title}"},
-                {"ExpirationUtc", $"{time}"},
-                {"description", $"{description}" },
-                {"status", $"{status}"}
+                Title = "Task updated",
+                Description = "Task description updated",
+                Status = TaskStatus.Processing
             };
 
             // act
-            await Client.PatchDataAsync($"tasks/{taskId}", data);
+            await Client.Tasks.PatchAsync(task.Id.Value, patchRequest);
 
-            var model = await Client.GetAsync($"tasks/{taskId}");
-
-            var taskModel = await model.Content.ReadAsStringAsync();
-
-            var titleActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "title");
-            var descriptionActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "description");
-            var expirationActual = ResponseHelper.GetDataFromResponse<DateTime>(taskModel, "expirationUtc");
-            var statusActual = ResponseHelper.GetDataFromResponse<string>(taskModel, "status");
+            var taskModel = await Client.Tasks.GetByIdAsync(task.Id.Value);
 
             // assert
-            Assert.That(titleActual, Is.EqualTo(title));
-            Assert.That(descriptionActual, Is.EqualTo(description));
-            Assert.That(expirationActual, Is.EqualTo(time).Within(TimeSpan.FromSeconds(1)));
-            Assert.That(statusActual, Is.EqualTo(status));
+            Assert.That(taskModel.Title, Is.EqualTo(patchRequest.Title));
+            Assert.That(taskModel.Description, Is.EqualTo(patchRequest.Description));
+            Assert.That(taskModel.Status, Is.EqualTo(patchRequest.Status));
+            Assert.That(taskModel.State, Is.EqualTo(RootState.Active));
+            Assert.That(taskModel.CreatedUtc, Is.GreaterThan(DateTime.UtcNow.AddSeconds(-2)));
+            Assert.That(taskModel.UpdatedUtc, Is.GreaterThan(DateTime.UtcNow.AddSeconds(-2)));
+            Assert.That(taskModel.ExpirationUtc, Is.EqualTo(request.ExpirationUtc).Within(TimeSpan.FromSeconds(1)));
         }
 
         [Test]
         public async Task User_CanArchiveTask_Success()
         {
-            // arrange 
-            var taskId = await Client.PostDefaultTaskAsync();
+            // arrange
+            var request = RequestsFactory.DefaultCreateTaskRequest();
+            var task = await Client.Tasks.CreateAsync(request);
 
             // act
-            await Client.DeleteAsync($"tasks/{taskId}");
+            await Client.Tasks.ArchiveAsync(task.Id.Value);
 
-            var model = await Client.GetAsync($"tasks/{taskId}");
+            var taskModel = await Client.Tasks.GetByIdAsync(task.Id.Value);
 
-            var taskModel = await model.Content.ReadAsStringAsync();
-
-            // assert
-            var state = ResponseHelper.GetDataFromResponse<string>(taskModel, "state");
-
-            Assert.That(state, Is.EqualTo("Archived"));
+            Assert.That(taskModel.State, Is.EqualTo(RootState.Archived));
 
         }
     }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Integration.Helpers;
+﻿using System.Threading.Tasks;
 using NUnit.Framework;
+using TasksPlatform.Shared.API;
 
 namespace Integration
 {
@@ -14,22 +12,18 @@ namespace Integration
             // arrange
             const int time = 10;
 
-            var data = new Dictionary<string, string>
+            var request = new JobSettings()
             {
-                {"checkTaskExpirationJobSec", $"{time}"}
+                CheckTaskExpirationJobSec = time
             };
 
             // act
-            var response = await Client.PostDataAsync("settings/jobs", data);
+            await Client.Settings.SetJobSettingsAsync(request);
 
-            var model = await Client.GetAsync($"settings/jobs");
-
-            var tasks = await model.Content.ReadAsStringAsync();
-
-            var job = ResponseHelper.GetDataFromResponse<int>(tasks, "checkTaskExpirationJobSec");
+            var model = await Client.Settings.GetJobSettingsAsync();
 
             // assert
-            Assert.That(job, Is.EqualTo(time));
+            Assert.That(model.CheckTaskExpirationJobSec, Is.EqualTo(time));
         }
     }
 }

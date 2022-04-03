@@ -224,6 +224,27 @@
           }
         }
       }
+    },
+    "/api/ping": {
+      "get": {
+        "tags": [
+          "Healty"
+        ],
+        "operationId": "Healty_Ping",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
