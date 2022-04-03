@@ -5,6 +5,7 @@ using Environment.State;
 using MediatR;
 using Objects.Common;
 using Objects.Dto;
+using Persistence.Src;
 using Persistence.Storage;
 using State.Commands.Tasks;
 using TaskStatus = Objects.Dto.TaskStatus;
@@ -14,9 +15,9 @@ namespace State.Handlers.Tasks
     internal class CreateTaskHandler : IRequestHandler<CreateTaskCommand, StateResult>
     {
         // services
-        private readonly IStorage<TaskDto> _storage;
+        private readonly IDomainManager<TaskDto> _storage;
 
-        public CreateTaskHandler(IStorage<TaskDto> storage)
+        public CreateTaskHandler(IDomainManager<TaskDto> storage)
         {
             _storage = storage;
         }

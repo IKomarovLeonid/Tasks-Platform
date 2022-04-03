@@ -4,6 +4,7 @@ using Environment.State;
 using MediatR;
 using Objects.Common;
 using Objects.Dto;
+using Persistence.Src;
 using Persistence.Storage;
 using State.Commands.Tasks;
 using TaskStatus = Objects.Dto.TaskStatus;
@@ -13,9 +14,9 @@ namespace State.Handlers.Tasks
     internal class ArchiveTaskHandler : IRequestHandler<ArchiveTaskCommand, StateResult>
     {
         // services
-        private readonly IStorage<TaskDto> _storage;
+        private readonly IDomainManager<TaskDto> _storage;
 
-        public ArchiveTaskHandler(IStorage<TaskDto> storage)
+        public ArchiveTaskHandler(IDomainManager<TaskDto> storage)
         {
             _storage = storage;
         }

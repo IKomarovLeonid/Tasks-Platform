@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using NLog;
 using Objects.Common;
 using Objects.Dto;
+using Persistence.Src;
 using Persistence.Storage;
 using Quartz;
 using TaskStatus = Objects.Dto.TaskStatus;
@@ -12,11 +13,11 @@ namespace Processing.Jobs
     public class CheckTaskExpirationJob : IJob
     {
         // services
-        private readonly IStorage<TaskDto> _storage;
+        private readonly IDomainManager<TaskDto> _storage;
 
         private readonly ILogger _logger = LogManager.GetLogger(nameof(CheckTaskExpirationJob));
 
-        public CheckTaskExpirationJob(IStorage<TaskDto> storage)
+        public CheckTaskExpirationJob(IDomainManager<TaskDto> storage)
         {
             _storage = storage;
         }

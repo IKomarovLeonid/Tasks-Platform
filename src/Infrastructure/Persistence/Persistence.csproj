@@ -20,5 +20,9 @@
 	<ItemGroup>
 	  <None Remove="Src\Events\" />
 	  <None Remove="System.Reactive" />
+	  <None Remove="Src\Store\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Src\Store\" />
 	</ItemGroup>
 </Project>
