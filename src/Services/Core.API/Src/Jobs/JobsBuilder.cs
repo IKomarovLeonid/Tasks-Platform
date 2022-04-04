@@ -36,7 +36,7 @@ namespace Core.API.Jobs
                 .WithIdentity("CheckTaskExpirationJob", "group1")
                 .Build();
 
-            ITrigger trigger = TriggerBuilder.Create()
+            var trigger = TriggerBuilder.Create()
                 .WithIdentity("jobsTrigger", "group1")
                 .StartNow()
                 .WithSimpleSchedule(x => x
@@ -52,7 +52,7 @@ namespace Core.API.Jobs
                 .WithIdentity("ReloadCachesJob", "group1")
                 .Build();
 
-            ITrigger triggerCaches = TriggerBuilder.Create()
+            var triggerCaches = TriggerBuilder.Create()
                 .WithIdentity("cachesTrigger", "group1")
                 .StartNow()
                 .WithSimpleSchedule(x => x

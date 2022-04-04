@@ -32,27 +32,23 @@ namespace Core.API.Mapping
 
         public ActionResult<PageViewModel<TView>> ToView<TModel, TView>(SelectResult<TModel> result)
         {
-            if (result.Code == ErrorCode.None)
-            {
-                var items = _mapper.Map<ICollection<TView>>(result.Data);
+            if (result.Code != ErrorCode.None) return ToErrorResult(result);
 
-                var view = PageViewModel<TView>.New(items);
+            var items = _mapper.Map<ICollection<TView>>(result.Data);
 
-                return new OkObjectResult(view);
-            }
+            var view = PageViewModel<TView>.New(items);
 
-            return ToErrorResult(result);
+            return new OkObjectResult(view);
+
         }
 
         public ActionResult<TView> ToView<TModel, TView>(FindResult<TModel> result)
         {
-            if (result.Code == ErrorCode.None)
-            {
-                var view = _mapper.Map<TView>(result.Data);
-                return new OkObjectResult(view);
-            }
+            if (result.Code != ErrorCode.None) return ToErrorResult(result);
 
-            return ToErrorResult(result);
+            var view = _mapper.Map<TView>(result.Data);
+            return new OkObjectResult(view);
+
         }
 
         private ActionResult ToErrorResult(IAbstractResult result)
