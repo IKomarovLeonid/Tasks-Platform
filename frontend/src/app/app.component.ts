@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HealtyApi} from "../communication/main.api";
+import {CreateTaskRequestModel, HealtyApi, TasksApi} from "../communication/main.api";
 
 @Component({
   selector: 'app-root',
@@ -7,12 +7,28 @@ import {HealtyApi} from "../communication/main.api";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  constructor(private api: HealtyApi) {
+  constructor(private api: TasksApi) {
 
   }
 
   async ngOnInit() {
-    const response = await this.api.ping();
-    console.log(response);
+    /**
+    const request = new CreateTaskRequestModel();
+    request.title = "From angular app";
+    request.description = "From angular app description";
+
+    const createResponse = await this.api.create(request);
+
+    createResponse.subscribe(async data => {
+      let id = data.id as number;
+      const response = await this.api.getById(id);
+      response.subscribe(data => {
+          alert(JSON.stringify(data));
+        },
+        error => {
+          alert(JSON.stringify(error.response))
+        });
+    })
+     */
   }
 }

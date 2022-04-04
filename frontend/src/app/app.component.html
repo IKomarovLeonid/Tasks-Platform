@@ -1,2 +1,13 @@
-<h1>Main app component works!</h1>
-<router-outlet></router-outlet>
+<mat-toolbar>
+  Tasks Platform
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav  class="mat-elevation-z8">
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <tasks-view-component></tasks-view-component>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
