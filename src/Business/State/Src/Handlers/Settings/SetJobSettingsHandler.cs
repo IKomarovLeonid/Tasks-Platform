@@ -24,7 +24,8 @@ namespace State.Handlers.Settings
         {
             var settings = new JobSettings()
             {
-                CheckTaskExpirationJobSec = request.CheckTaskExpirationJobSec
+                CheckTaskExpirationJobSec = request.CheckTaskExpirationJobSec,
+                ReloadCachesJobSec = request.ReloadCachesJobSec
             };
 
             var validation = settings.Validate();

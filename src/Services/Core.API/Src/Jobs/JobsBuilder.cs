@@ -6,6 +6,7 @@ using NLog;
 using Objects.Settings;
 using Persistence.Storage;
 using Processing.Jobs;
+using Processing.Src.Jobs;
 using Quartz;
 using Scheduler;
 
@@ -48,7 +49,7 @@ namespace Core.API.Jobs
 
             jobs.Add(new JobDescription(trigger, jobDetail));
 
-            var jobDetailCaches = JobBuilder.Create<CheckTaskExpirationJob>()
+            var jobDetailCaches = JobBuilder.Create<ReloadCachesJob>()
                 .WithIdentity("ReloadCachesJob", "group1")
                 .Build();
 

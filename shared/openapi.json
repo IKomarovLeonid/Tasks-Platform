@@ -256,6 +256,10 @@
           "checkTaskExpirationJobSec": {
             "type": "integer",
             "format": "int32"
+          },
+          "reloadCachesJobSec": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

@@ -1024,6 +1024,9 @@ namespace TasksPlatform.Shared.API
         [Newtonsoft.Json.JsonProperty("checkTaskExpirationJobSec", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int CheckTaskExpirationJobSec { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("reloadCachesJobSec", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int ReloadCachesJobSec { get; set; }
+
         public string ToJson()
         {
 
