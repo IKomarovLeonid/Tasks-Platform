@@ -10,7 +10,7 @@ import {MatTableDataSource} from "@angular/material/table";
 export class TasksViewComponent implements OnInit{
 
    public dataSource = new MatTableDataSource<TaskViewModel>();
-   public displayedColumns = ['id', 'title', 'status'];
+   public displayedColumns = ['id', 'title', 'state', 'status', 'updatedUtc'];
 
    constructor(private mediator: TasksMediator) {
    }
