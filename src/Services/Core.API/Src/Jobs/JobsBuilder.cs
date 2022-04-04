@@ -6,7 +6,6 @@ using NLog;
 using Objects.Settings;
 using Persistence.Storage;
 using Processing.Jobs;
-using Processing.Src.Jobs;
 using Quartz;
 using Scheduler;
 

@@ -9,7 +9,7 @@ namespace Environment.State
 
         public ErrorCode Code { get; private init; }
 
-        public string ErrorMessage { get; private init; }
+        public string Message { get; private init; }
 
         public DateTime? ErrorTimeUtc { get; private init; }
 
@@ -19,19 +19,19 @@ namespace Environment.State
         {
             Id = id,
             Code = ErrorCode.None,
-            ErrorMessage = string.Empty,
+            Message = string.Empty,
         };
 
         public static StateResult Applied() => new StateResult()
         {
             Code = ErrorCode.None,
-            ErrorMessage = string.Empty
+            Message = string.Empty
         };
 
         public static StateResult Error(ErrorCode code, string message = null) => new StateResult()
         {
             Code = code,
-            ErrorMessage = message ?? string.Empty,
+            Message = message ?? string.Empty,
             ErrorTimeUtc = DateTime.UtcNow,
         };
     }

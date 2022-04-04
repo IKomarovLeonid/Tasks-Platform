@@ -7,7 +7,7 @@ namespace Environment.Queries
     {
         public ErrorCode Code { get; private init; }
 
-        public string ErrorMessage { get; private init; }
+        public string Message { get; private init; }
 
         public ICollection<TModel> Data { get; private init; }
 
@@ -22,7 +22,7 @@ namespace Environment.Queries
         public static SelectResult<TModel> Error(ErrorCode code, string message = " ") => new SelectResult<TModel>()
         {
             Code = code,
-            ErrorMessage = message
+            Message = message
         };
     }
 }

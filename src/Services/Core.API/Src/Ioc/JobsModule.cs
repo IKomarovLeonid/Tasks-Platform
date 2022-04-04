@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Core.API.Jobs;
 using Processing.Jobs;
-using Processing.Src.Jobs;
 
 namespace Core.API.Ioc
 {

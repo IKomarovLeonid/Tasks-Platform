@@ -4,7 +4,7 @@ using Objects.Dto;
 using Persistence.Src;
 using Quartz;
 
-namespace Processing.Src.Jobs
+namespace Processing.Jobs
 {
     public class ReloadCachesJob : IJob
     {

@@ -7,8 +7,6 @@ using Environment.State;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Objects.Common;
-using Queries;
-using State;
 
 namespace Core.API.Mapping
 {
@@ -63,10 +61,10 @@ namespace Core.API.Mapping
 
             if (isNotFound)
             {
-                return new ObjectResult(result) { StatusCode = StatusCodes.Status404NotFound };
+                return new NotFoundObjectResult(ErrorViewResponse.Build(result.Code, result.Message)) { StatusCode = StatusCodes.Status404NotFound };
             }
 
-            return new BadRequestObjectResult(result);
+            return new BadRequestObjectResult(ErrorViewResponse.Build(result.Code, result.Message));
         }
     }
 }

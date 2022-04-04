@@ -18,7 +18,7 @@ namespace Environment.Queries
             Code = ErrorCode.None
         };
 
-        public static FindResult<TModel> Error(ErrorCode code, string message = " ") => new()
+        public static FindResult<TModel> Error(ErrorCode code, string message = "") => new()
         {
             Data = default,
             Code = code,
