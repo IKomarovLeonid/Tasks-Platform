@@ -20,11 +20,14 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CommonModule} from "@angular/common";
+import {CreateTaskComponent} from "./business/tasks/tasks-create/create-task.component";
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
     AppComponent,
-    TasksViewComponent
+    TasksViewComponent,
+    CreateTaskComponent
   ],
   imports: [
     CommonModule,
@@ -39,11 +42,14 @@ import {CommonModule} from "@angular/common";
     MatDividerModule,
     MatTableModule,
     MatSortModule,
+    MatDialogModule,
     MatProgressSpinnerModule,
     MatInputModule,
     MatPaginatorModule,
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
