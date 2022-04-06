@@ -18,16 +18,19 @@ export class TasksViewComponent implements OnInit{
    }
 
    async ngOnInit(): Promise<void>{
-     const response = await this.mediator.GetAll(VisibleScope.Active);
-     console.log(response.items);
+     await this.refresh(VisibleScope.Active);
+   }
+
+   private async refresh(scope: VisibleScope): Promise<void>{
+     const response = await this.mediator.GetAll(scope);
      this.dataSource.data = response.items;
    }
 
    onCreate(): void {
      const dialogRef = this.dialog.open(CreateTaskComponent);
 
-     dialogRef.afterClosed().subscribe(result => {
-       alert("dialog closed");
+     dialogRef.afterClosed().subscribe(async result => {
+       await this.refresh(VisibleScope.Active);
      });
    }
 }

@@ -22,6 +22,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CommonModule} from "@angular/common";
 import {CreateTaskComponent} from "./business/tasks/tasks-create/create-task.component";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
+import {ReactiveFormsModule} from "@angular/forms";
+import { FormlyModule } from '@ngx-formly/core';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dia
     MatProgressSpinnerModule,
     MatInputModule,
     MatPaginatorModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot()
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
