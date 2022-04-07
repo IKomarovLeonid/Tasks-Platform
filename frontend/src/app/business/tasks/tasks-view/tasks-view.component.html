@@ -1,6 +1,6 @@
 <mat-toolbar class = "actions-bar" >
   <button mat-button color="primary" (click)="onCreate()">Create</button>
-  <button mat-button color="primary">Refresh</button>
+  <button mat-button color="primary" (click)="onRefresh()">Refresh</button>
 </mat-toolbar>
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="id">

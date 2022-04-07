@@ -30,7 +30,11 @@ export class TasksViewComponent implements OnInit{
      const dialogRef = this.dialog.open(CreateTaskComponent);
 
      dialogRef.afterClosed().subscribe(async result => {
-       await this.refresh(VisibleScope.Active);
+       if(result) await this.refresh(VisibleScope.Active);
      });
+   }
+
+   async onRefresh(): Promise<void>{
+     await this.refresh(VisibleScope.Active);
    }
 }

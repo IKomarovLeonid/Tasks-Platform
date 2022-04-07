@@ -2,9 +2,7 @@
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
     <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button mat-button class="btn btn-default" [disabled]="!form.valid">Submit</button>
+    <button mat-button mat-dialog-close>Cancel</button>
   </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-</mat-dialog-actions>

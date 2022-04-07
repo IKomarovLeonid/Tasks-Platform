@@ -1,7 +1,14 @@
 import {Injectable} from "@angular/core";
-import {TasksApi, TaskViewModel, VisibleScope} from "../../communication/main.api";
+import {
+  AffectionViewModel,
+  CreateTaskRequestModel,
+  TasksApi,
+  TaskViewModel,
+  VisibleScope
+} from "../../communication/main.api";
 import {SelectResult} from "../queries/select.result";
-import {lastValueFrom, Observable} from "rxjs";
+import {lastValueFrom} from "rxjs";
+import {CommandResult} from "../queries/command.result";
 
 @Injectable({providedIn: "root"})
 export class TasksMediator{
@@ -13,5 +20,17 @@ export class TasksMediator{
     const response$ = await this.api.get(scope);
     const model = await lastValueFrom(response$);
     return new SelectResult<TaskViewModel>(model.items !!);
+  }
+
+  async CreateAsync(model: CreateTaskRequestModel): Promise<CommandResult<AffectionViewModel>>{
+    try {
+      const response$ = await this.api.create(model);
+      const data = await lastValueFrom(response$);
+      return new CommandResult<AffectionViewModel>(data);
+    }
+    catch (error){
+      // @ts-ignore
+      return new CommandResult<AffectionViewModel>(undefined, error.response);
+    }
   }
 }
