@@ -11,18 +11,20 @@ import {CreateTaskComponent} from "../tasks-create/create-task.component";
 })
 export class TasksViewComponent implements OnInit{
 
+   public currentScope: VisibleScope;
    public dataSource = new MatTableDataSource<TaskViewModel>();
    public displayedColumns = ['id', 'title', 'state', 'status', 'expirationUtc', 'updatedUtc', 'profile'];
 
    constructor(private mediator: TasksMediator, public dialog: MatDialog) {
+     this.currentScope = VisibleScope.Active;
    }
 
    async ngOnInit(): Promise<void>{
-     await this.refresh(VisibleScope.Active);
+     await this.refresh();
    }
 
-   private async refresh(scope: VisibleScope): Promise<void>{
-     const response = await this.mediator.GetAll(scope);
+   private async refresh(): Promise<void>{
+     const response = await this.mediator.GetAll(this.currentScope);
      this.dataSource.data = response.items;
    }
 
@@ -30,11 +32,21 @@ export class TasksViewComponent implements OnInit{
      const dialogRef = this.dialog.open(CreateTaskComponent);
 
      dialogRef.afterClosed().subscribe(async result => {
-       if(result) await this.refresh(VisibleScope.Active);
+       if(result) await this.refresh();
      });
    }
 
    async onRefresh(): Promise<void>{
-     await this.refresh(VisibleScope.Active);
+     await this.refresh();
+   }
+
+   async onArchive(id: number): Promise<void>{
+     await this.mediator.ArchiveAsync(id);
+     await this.refresh();
+   }
+
+   onSetScope(): void{
+     this.currentScope = this.currentScope == VisibleScope.Active ? VisibleScope.All : VisibleScope.Active;
+     this.refresh();
    }
 }

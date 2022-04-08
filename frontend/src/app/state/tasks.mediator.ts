@@ -33,4 +33,16 @@ export class TasksMediator{
       return new CommandResult<AffectionViewModel>(undefined, error.response);
     }
   }
+
+  async ArchiveAsync(id: number): Promise<CommandResult<AffectionViewModel>>{
+    try {
+      const response$ = await this.api.archive(id);
+      const data = await lastValueFrom(response$);
+      return new CommandResult<AffectionViewModel>(data);
+    }
+    catch (error){
+      // @ts-ignore
+      return new CommandResult<AffectionViewModel>(undefined, error.response);
+    }
+  }
 }
