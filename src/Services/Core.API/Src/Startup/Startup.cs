@@ -1,10 +1,13 @@
 ﻿using System;
+using System.IO;
 using Autofac.Extensions.DependencyInjection;
 using Core.API.Configuration;
 using Core.API.Ioc;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Converters;
 using Persistence;
@@ -67,6 +70,22 @@ namespace Core.API.Startup
             app.UseMvcWithDefaultRoute();
 
             app.UseOpenApi().UseSwaggerUi3();
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+
+            if(!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+            app.UseDefaultFiles(new DefaultFilesOptions()
+            {
+                FileProvider = new PhysicalFileProvider(path),
+                RequestPath = new PathString("")
+            }) ;
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(path),
+                RequestPath = new PathString("")
+            });
         }
     }
 }
