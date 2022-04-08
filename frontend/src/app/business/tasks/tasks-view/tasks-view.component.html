@@ -37,7 +37,7 @@
   <ng-container matColumnDef="profile">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button mat-button color="danger" (click)="onArchive(element.id)">
+      <button mat-button (click)="onArchive(element.id)">
         <mat-icon>delete</mat-icon>
       </button>
     </td>
