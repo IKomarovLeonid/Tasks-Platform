@@ -20,14 +20,12 @@ import { FormlyModule } from '@ngx-formly/core';
 import {FormlyMaterialModule} from "@ngx-formly/material";
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {ConfirmDialogComponent} from "./business/common/confirm-dialog.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     TasksViewComponent,
     CreateTaskComponent,
-    ConfirmDialogComponent
   ],
   imports: [
     CommonModule,

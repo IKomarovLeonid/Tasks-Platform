@@ -1,16 +1,16 @@
-import {Component, OnInit} from "@angular/core";
+import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
 import {TasksMediator} from "../../../state/tasks.mediator";
 import {TaskViewModel, VisibleScope} from "../../../../communication/main.api";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateTaskComponent} from "../tasks-create/create-task.component";
-import {ConfirmDialogComponent} from "../../common/confirm-dialog.component";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'tasks-view-component',
   templateUrl: 'tasks-view.component.html',
 })
-export class TasksViewComponent implements OnInit{
+export class TasksViewComponent implements OnInit, AfterViewInit{
 
    public currentScope: VisibleScope;
    public dataSource = new MatTableDataSource<TaskViewModel>();
@@ -21,6 +21,13 @@ export class TasksViewComponent implements OnInit{
      public dialog: MatDialog) {
      this.currentScope = VisibleScope.Active;
    }
+
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
    async ngOnInit(): Promise<void>{
      await this.refresh();
@@ -43,14 +50,9 @@ export class TasksViewComponent implements OnInit{
      await this.refresh();
    }
 
-   onArchive(id: number): void{
-     const dialogRef = this.dialog.open(ConfirmDialogComponent);
-     dialogRef.afterClosed().subscribe(async result => {
-       if(result){
-         await this.mediator.ArchiveAsync(id);
-         await this.onRefresh();
-       }
-     })
+   async onArchive(id: number): Promise<void> {
+     await this.mediator.ArchiveAsync(id);
+     await this.refresh();
    }
 
    onSetScope(): void{
