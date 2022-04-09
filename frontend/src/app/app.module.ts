@@ -20,6 +20,8 @@ import { FormlyModule } from '@ngx-formly/core';
 import {FormlyMaterialModule} from "@ngx-formly/material";
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatProgressSpinnerModule, MatSpinner} from "@angular/material/progress-spinner";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatPaginatorModule,
     ReactiveFormsModule,
     FormlyMaterialModule,
+    MatProgressBarModule,
     FormlyModule.forRoot()
   ],
   providers: [

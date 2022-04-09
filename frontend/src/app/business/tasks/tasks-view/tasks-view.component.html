@@ -3,6 +3,7 @@
   <button mat-button color="primary" (click)="onSetScope()">{{currentScope}}</button>
   <button mat-button color="primary" (click)="onRefresh()">Refresh</button>
 </mat-toolbar>
+<mat-progress-bar mode="query" *ngIf="isLoading"></mat-progress-bar>
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> Id </th>

@@ -12,6 +12,7 @@ import {MatPaginator} from "@angular/material/paginator";
 })
 export class TasksViewComponent implements OnInit, AfterViewInit{
 
+   public isLoading: boolean;
    public currentScope: VisibleScope;
    public dataSource = new MatTableDataSource<TaskViewModel>();
    public displayedColumns = ['id', 'title', 'state', 'status', 'expirationUtc', 'updatedUtc', 'profile'];
@@ -20,6 +21,7 @@ export class TasksViewComponent implements OnInit, AfterViewInit{
      private mediator: TasksMediator,
      public dialog: MatDialog) {
      this.currentScope = VisibleScope.Active;
+     this.isLoading = false;
    }
 
   @ViewChild(MatPaginator)
@@ -34,8 +36,10 @@ export class TasksViewComponent implements OnInit, AfterViewInit{
    }
 
    private async refresh(): Promise<void>{
+     this.isLoading = true;
      const response = await this.mediator.GetAll(this.currentScope);
      this.dataSource.data = response.items;
+     this.isLoading = false;
    }
 
    onCreate(): void {
