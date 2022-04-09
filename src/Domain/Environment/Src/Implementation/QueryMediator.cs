@@ -59,7 +59,7 @@ namespace Environment.Implementation
 
                 _stopwatch.Stop();
 
-                Logger.Info($"Response (elapsed: {_stopwatch.ElapsedMilliseconds} milliseconds) of select query: {JsonConvert.SerializeObject(response)}");
+                Logger.Info($"Response (elapsed: {_stopwatch.ElapsedMilliseconds} milliseconds) of select query [Errors: {response.Code}]");
 
                 _stopwatch.Reset();
 

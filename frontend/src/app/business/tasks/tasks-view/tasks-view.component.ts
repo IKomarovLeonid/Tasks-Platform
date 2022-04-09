@@ -4,6 +4,7 @@ import {TaskViewModel, VisibleScope} from "../../../../communication/main.api";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateTaskComponent} from "../tasks-create/create-task.component";
+import {ConfirmDialogComponent} from "../../common/confirm-dialog.component";
 
 @Component({
   selector: 'tasks-view-component',
@@ -15,7 +16,9 @@ export class TasksViewComponent implements OnInit{
    public dataSource = new MatTableDataSource<TaskViewModel>();
    public displayedColumns = ['id', 'title', 'state', 'status', 'expirationUtc', 'updatedUtc', 'profile'];
 
-   constructor(private mediator: TasksMediator, public dialog: MatDialog) {
+   constructor(
+     private mediator: TasksMediator,
+     public dialog: MatDialog) {
      this.currentScope = VisibleScope.Active;
    }
 
@@ -40,9 +43,14 @@ export class TasksViewComponent implements OnInit{
      await this.refresh();
    }
 
-   async onArchive(id: number): Promise<void>{
-     await this.mediator.ArchiveAsync(id);
-     await this.refresh();
+   onArchive(id: number): void{
+     const dialogRef = this.dialog.open(ConfirmDialogComponent);
+     dialogRef.afterClosed().subscribe(async result => {
+       if(result){
+         await this.mediator.ArchiveAsync(id);
+         await this.onRefresh();
+       }
+     })
    }
 
    onSetScope(): void{
