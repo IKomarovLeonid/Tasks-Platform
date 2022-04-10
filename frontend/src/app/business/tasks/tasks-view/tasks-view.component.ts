@@ -6,6 +6,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {CreateTaskComponent} from "../tasks-create/create-task.component";
 import {MatPaginator} from "@angular/material/paginator";
 import {UiService} from "../../../services/ui/ui.service";
+import {TaskProfileComponent} from "../task-profile/task-profile.component";
 
 @Component({
   selector: 'tasks-view-component',
@@ -68,5 +69,13 @@ export class TasksViewComponent implements OnInit, AfterViewInit{
    onSetScope(): void{
      this.currentScope = this.currentScope == VisibleScope.Active ? VisibleScope.All : VisibleScope.Active;
      this.refresh();
+   }
+
+   onView(id: number){
+     this.dialog.open(TaskProfileComponent, {
+       data: {
+         "id": id
+       }
+     });
    }
 }

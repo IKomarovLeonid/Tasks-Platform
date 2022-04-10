@@ -60,3 +60,8 @@ th.mat-header-cell {
   display: flex;
 }
 
+.settings-container{
+  display: flex;
+  margin-right: 0px;
+  margin-left: auto;
+}

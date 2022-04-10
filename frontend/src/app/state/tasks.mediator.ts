@@ -51,4 +51,16 @@ export class TasksMediator{
       return new CommandResult<AffectionViewModel>(undefined, error.response);
     }
   }
+
+  async GetByIdAsync(id: number): Promise<CommandResult<TaskViewModel>>{
+    try {
+      const response$ = await this.api.getById(id);
+      const data = await lastValueFrom(response$);
+      return new CommandResult<TaskViewModel>(data);
+    }
+    catch (error){
+      // @ts-ignore
+      return new CommandResult<TaskViewModel>(undefined, error.response);
+    }
+  }
 }
