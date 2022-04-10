@@ -30,14 +30,22 @@ export class CreateTaskComponent{
         label: 'What you are going to do?',
         required: true,
       }
-    }
+    },
+    {
+      key: 'expirationUtc',
+      type: 'input',
+      templateOptions: {
+        label: 'Expiration time',
+        type: 'date',
+        required: false,
+      },
+    },
   ];
 
   constructor(
     private readonly mediator: TasksMediator,
     public dialogRef: MatDialogRef<CreateTaskComponent>,
     public readonly ui: UiService) {
-
   }
 
   async onSubmit(model: CreateTaskRequestModel): Promise<void>{
