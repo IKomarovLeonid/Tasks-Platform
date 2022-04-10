@@ -4,6 +4,7 @@ import {JobSettings} from "../../../../communication/main.api";
 import {FormGroup} from "@angular/forms";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {MatDialogRef} from "@angular/material/dialog";
+import {UiService} from "../../../services/ui/ui.service";
 
 @Component({
   selector: 'jobs-view-component',
@@ -38,20 +39,32 @@ export class JobsViewComponent implements OnInit{
     }
   ];
 
-  constructor(private mediator: SettingsMediator, public dialogRef: MatDialogRef<JobsViewComponent>) {
+  constructor(
+    private mediator: SettingsMediator,
+    public dialogRef: MatDialogRef<JobsViewComponent>,
+    public readonly ui: UiService) {
 
   }
 
   async ngOnInit(): Promise<void> {
     const response = await this.mediator.GetJobsAsync();
     if(response.isSuccess()) this.model = response.data!!;
-    else alert(response.errorMessage);
+    else{
+      const message = this.ui.parser.Parse(response.errorMessage);
+      this.ui.notifications.Error(message);
+    }
   }
 
   async onSubmit(): Promise<void>{
     const response = await this.mediator.SetJobsAsync(this.model);
-    if(response.isSuccess()) this.dialogRef.close(true);
-    else alert(response.errorMessage);
+    if(response.isSuccess()) {
+      this.dialogRef.close(true);
+      this.ui.notifications.Success()
+    }
+    else{
+      const message = this.ui.parser.Parse(response.errorMessage);
+      this.ui.notifications.Error(message);
+    }
   }
 
 }

@@ -5,6 +5,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateTaskComponent} from "../tasks-create/create-task.component";
 import {MatPaginator} from "@angular/material/paginator";
+import {UiService} from "../../../services/ui/ui.service";
 
 @Component({
   selector: 'tasks-view-component',
@@ -19,7 +20,8 @@ export class TasksViewComponent implements OnInit, AfterViewInit{
 
    constructor(
      private mediator: TasksMediator,
-     public dialog: MatDialog) {
+     public dialog: MatDialog,
+     public readonly ui: UiService) {
      this.currentScope = VisibleScope.Active;
      this.isLoading = false;
    }
@@ -38,7 +40,11 @@ export class TasksViewComponent implements OnInit, AfterViewInit{
    private async refresh(): Promise<void>{
      this.isLoading = true;
      const response = await this.mediator.GetAll(this.currentScope);
-     this.dataSource.data = response.items;
+     if(response.IsSuccess()) this.dataSource.data = response.items;
+     else{
+       const message = this.ui.parser.Parse(response.errorMessage);
+       this.ui.notifications.Error(message);
+     }
      this.isLoading = false;
    }
 

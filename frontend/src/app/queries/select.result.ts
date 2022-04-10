@@ -5,4 +5,8 @@ export class SelectResult<T>{
     this.items = items;
   }
 
+  public IsSuccess(): boolean{
+    return this.errorMessage == "";
+  }
+
 }

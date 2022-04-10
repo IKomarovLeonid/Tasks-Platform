@@ -17,9 +17,15 @@ export class TasksMediator{
 
 
   async GetAll(scope: VisibleScope): Promise<SelectResult<TaskViewModel>>{
-    const response$ = await this.api.get(scope);
-    const model = await lastValueFrom(response$);
-    return new SelectResult<TaskViewModel>(model.items !!);
+    try{
+      const response$ = await this.api.get(scope);
+      const model = await lastValueFrom(response$);
+      return new SelectResult<TaskViewModel>(model.items !!);
+    }
+    catch (e){
+      // @ts-ignore
+      return new SelectResult<TaskViewModel>([], e);
+    }
   }
 
   async CreateAsync(model: CreateTaskRequestModel): Promise<CommandResult<AffectionViewModel>>{

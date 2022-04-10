@@ -22,6 +22,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {JobsViewComponent} from "./business/settings/jobs/jobs-view.component";
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -46,12 +47,14 @@ import {JobsViewComponent} from "./business/settings/jobs/jobs-view.component";
     MatInputModule,
     MatPaginatorModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
     FormlyMaterialModule,
     MatProgressBarModule,
     FormlyModule.forRoot()
   ],
   providers: [
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}
   ],
   bootstrap: [AppComponent]
 })
