@@ -1,9 +1,12 @@
 <h2 mat-dialog-title>Task {{model.id}} info</h2>
 <mat-dialog-content class="mat-typography">
   <form>
-    <div>Title {{model.title}}</div>
-    <div>Status {{model.status}}</div>
-    <div>Description {{model.description}}</div>
+    <div>Title: {{model.title}}</div>
+    <div>Status: {{model.status}}</div>
+    <div>Expiration: {{model.expirationUtc| date:'yyyy-MM-dd HH:mm:ss'}}</div>
+    <div class = "description-container">Description: {{model.description}}</div>
+    <div>Created time: {{model.createdUtc | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+    <div>Updated time: {{model.updatedUtc | date:'yyyy-MM-dd HH:mm:ss'}}</div>
     <button mat-button mat-dialog-close>Cancel</button>
   </form>
 </mat-dialog-content>

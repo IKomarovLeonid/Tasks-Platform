@@ -65,3 +65,7 @@ th.mat-header-cell {
   margin-right: 0px;
   margin-left: auto;
 }
+
+.description-container{
+  max-width: 5%;
+}
