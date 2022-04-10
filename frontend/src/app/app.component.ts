@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {CreateTaskRequestModel, HealtyApi, TasksApi} from "../communication/main.api";
+import {MatDialog} from "@angular/material/dialog";
+import {JobsViewComponent} from "./business/settings/jobs/jobs-view.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit{
-  constructor(private api: TasksApi) {
+  constructor(private dialog: MatDialog) {
 
   }
 
@@ -30,4 +31,9 @@ export class AppComponent implements OnInit{
     })
      */
   }
+
+  viewJobs(): void{
+    const dialogReg = this.dialog.open(JobsViewComponent);
+  }
 }
+

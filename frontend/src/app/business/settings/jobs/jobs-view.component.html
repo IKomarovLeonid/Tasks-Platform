@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Jobs settings</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <button mat-button class="btn btn-default" [disabled]="!form.valid">Submit</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </form>
+</mat-dialog-content>
