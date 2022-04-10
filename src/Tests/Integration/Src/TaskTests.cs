@@ -103,5 +103,44 @@ namespace Integration
             Assert.That(taskModel.State, Is.EqualTo(RootState.Archived));
 
         }
+
+        [Test]
+        public async Task User_CanViewArchivedTask()
+        {
+            // arrange
+            var request = RequestsFactory.DefaultCreateTaskRequest();
+            var task = await Client.Tasks.CreateAsync(request);
+            await Client.Tasks.ArchiveAsync(task.Id.Value);
+
+            // act
+            var tasks = await Client.Tasks.GetAsync(VisibleScope.All);
+            var model = tasks.Items.FirstOrDefault(t => t.Id == task.Id.Value);
+
+            // assert
+            Assert.NotNull(model);
+
+        }
+
+        [Test]
+        public async Task System_ApplyExpirationCheck()
+        {
+            // arrange
+            await Client.Settings.SetJobSettingsAsync(new JobSettings()
+            {
+                CheckTaskExpirationJobSec = 20,
+                ReloadCachesJobSec = 50
+            });
+
+            var request = RequestsFactory.DefaultCreateTaskRequest();
+            request.ExpirationUtc = DateTime.UtcNow.AddMinutes(1);
+            var task = await Client.Tasks.CreateAsync(request);
+
+            // act
+            await Task.Delay(TimeSpan.FromSeconds(70));
+            var model = await Client.Tasks.GetByIdAsync(task.Id.Value);
+
+            // assert
+            Assert.That(model.Status, Is.EqualTo(TaskStatus.Expired));
+        }
     }
 }
