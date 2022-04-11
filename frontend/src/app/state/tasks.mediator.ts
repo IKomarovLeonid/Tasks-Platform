@@ -3,7 +3,7 @@ import {
   AffectionViewModel,
   CreateTaskRequestModel,
   TasksApi,
-  TaskViewModel,
+  TaskViewModel, UpdateTaskRequestModel,
   VisibleScope
 } from "../../communication/main.api";
 import {SelectResult} from "../queries/select.result";
@@ -61,6 +61,18 @@ export class TasksMediator{
     catch (error){
       // @ts-ignore
       return new CommandResult<TaskViewModel>(undefined, error.response);
+    }
+  }
+
+  async UpdateAsync(id: number, request: UpdateTaskRequestModel): Promise<CommandResult<AffectionViewModel>>{
+    try {
+      const response$ = await this.api.patch(id, request);
+      const data = await lastValueFrom(response$);
+      return new CommandResult<AffectionViewModel>(data);
+    }
+    catch (error){
+      // @ts-ignore
+      return new CommandResult<AffectionViewModel>(undefined, error.response);
     }
   }
 }

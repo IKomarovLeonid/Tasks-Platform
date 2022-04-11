@@ -1,12 +1,8 @@
-<h2 mat-dialog-title>Task {{model.id}} info</h2>
+<h2 mat-dialog-title>Update task #{{model.id}}</h2>
 <mat-dialog-content class="mat-typography">
-  <form>
-    <div>Title: {{model.title}}</div>
-    <div>Status: {{model.status}}</div>
-    <div>Expiration: {{model.expirationUtc| date:'yyyy-MM-dd HH:mm:ss'}}</div>
-    <div class = "description-container">Description: {{model.description}}</div>
-    <div>Created time: {{model.createdUtc | date:'yyyy-MM-dd HH:mm:ss'}}</div>
-    <div>Updated time: {{model.updatedUtc | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <button mat-button class="btn btn-default" [disabled]="!form.valid">Update</button>
     <button mat-button mat-dialog-close>Cancel</button>
   </form>
 </mat-dialog-content>

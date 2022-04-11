@@ -72,10 +72,14 @@ export class TasksViewComponent implements OnInit, AfterViewInit{
    }
 
    onView(id: number){
-     this.dialog.open(TaskProfileComponent, {
+     const dialogRef = this.dialog.open(TaskProfileComponent, {
        data: {
          "id": id
        }
+     });
+
+     dialogRef.afterClosed().subscribe(async result => {
+       if(result) await this.refresh();
      });
    }
 }
