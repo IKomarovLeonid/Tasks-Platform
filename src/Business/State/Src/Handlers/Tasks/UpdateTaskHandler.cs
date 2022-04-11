@@ -35,6 +35,9 @@ namespace State.Handlers.Tasks
             var result = dto.Validate();
             if (!result.IsValid) return StateResult.Error(ErrorCode.TaskValidationFailure, result.Errors.First().ToString());
 
+            // additional: set expiration to null when task are 'done'
+            if (dto.Status == TaskStatus.Processed) dto.ExpirationUtc = null;
+
             var entity = await _storage.UpdateAsync(dto);
 
             return StateResult.Applied(entity.Id);
