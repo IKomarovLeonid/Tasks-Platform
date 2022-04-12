@@ -6,7 +6,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {CreateTaskComponent} from "../tasks-create/create-task.component";
 import {MatPaginator} from "@angular/material/paginator";
 import {UiService} from "../../../services/ui/ui.service";
-import {TaskProfileComponent} from "../task-profile/task-profile.component";
+import {TaskEditComponent} from "../task-edit/task-edit.component";
 
 @Component({
   selector: 'tasks-view-component',
@@ -72,7 +72,7 @@ export class TasksViewComponent implements OnInit, AfterViewInit{
    }
 
    onView(id: number){
-     const dialogRef = this.dialog.open(TaskProfileComponent, {
+     const dialogRef = this.dialog.open(TaskEditComponent, {
        data: {
          "id": id
        }

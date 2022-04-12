@@ -23,6 +23,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {JobsViewComponent} from "./business/settings/jobs/jobs-view.component";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
+import {TaskEditComponent} from "./business/tasks/task-edit/task-edit.component";
 import {TaskProfileComponent} from "./business/tasks/task-profile/task-profile.component";
 
 @NgModule({
@@ -31,7 +32,8 @@ import {TaskProfileComponent} from "./business/tasks/task-profile/task-profile.c
     TasksViewComponent,
     CreateTaskComponent,
     JobsViewComponent,
-    TaskProfileComponent
+    TaskEditComponent,
+    TaskProfileComponent,
   ],
   imports: [
     CommonModule,

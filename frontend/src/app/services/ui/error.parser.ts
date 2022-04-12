@@ -8,7 +8,7 @@ export class ErrorParser{
   Parse(response: string): string {
     try{
       const model = JSON.parse(response);
-      return model.message;
+      return model.message === "" ? model.errorCode : model.message;
     }
     catch (e){
       // return as unknown error
