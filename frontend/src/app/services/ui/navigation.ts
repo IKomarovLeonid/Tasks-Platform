@@ -7,7 +7,11 @@ export class ApplicationRouter{
 
   }
 
-  public async RedirectToTasks(): Promise<void>{
-    await this.router.navigateByUrl('/tasks');
+  public async RedirectToHome(): Promise<void>{
+    await this.router.navigateByUrl('/');
+  }
+
+  public async RedirectToTaskProfile(id: number): Promise<void>{
+    await this.router.navigate(['/tasks', id])
   }
 }

@@ -5,9 +5,8 @@ import {TasksViewComponent} from "./business/tasks/tasks-view/tasks-view.compone
 
 const routes: Routes = [
   { path: 'tasks/:id', component: TaskProfileComponent},
-  { path: 'tasks', component: TasksViewComponent},
-  { path: '', pathMatch: 'full', redirectTo: 'tasks'},
-  { path: '**', pathMatch: 'full', redirectTo: 'tasks'}
+  { path: '', component: TasksViewComponent},
+  { path: '**', pathMatch: 'full', redirectTo: ''}
 ];
 
 @NgModule({

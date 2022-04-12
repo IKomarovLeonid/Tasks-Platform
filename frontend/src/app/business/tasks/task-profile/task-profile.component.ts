@@ -24,7 +24,7 @@ export class TaskProfileComponent implements OnInit{
         console.log(response);
         const message = this.ui.parser.Parse(response.errorMessage);
         this.ui.notifications.Error(message);
-        await this.ui.router.RedirectToTasks();
+        await this.ui.router.RedirectToHome();
       }
     })
   }
