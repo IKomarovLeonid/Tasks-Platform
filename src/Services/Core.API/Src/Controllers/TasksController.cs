@@ -51,7 +51,9 @@ namespace Core.API.Controllers
             {
                 Title = request.Title,
                 Description = request.Description,
-                ExpirationUtc = request.ExpirationUtc
+                ExpirationUtc = request.ExpirationUtc,
+                Category = request.Category,
+                Priority = request.Priority
             });
 
             return _viewMapper.ToView(result);
@@ -66,7 +68,9 @@ namespace Core.API.Controllers
                 Title = request.Title,
                 Description = request.Description,
                 Status = request.Status,
-                ExpirationUtc = request.ExpirationUtc
+                ExpirationUtc = request.ExpirationUtc,
+                Category = request.Category,
+                Priority = request.Priority
             });
 
             return _viewMapper.ToView(result);

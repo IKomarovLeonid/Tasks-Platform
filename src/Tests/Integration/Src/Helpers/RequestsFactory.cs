@@ -9,7 +9,9 @@ namespace Integration.Helpers
         {
             Title = "Default task",
             Description = "Default description",
-            ExpirationUtc = DateTime.UtcNow.AddHours(2)
+            ExpirationUtc = DateTime.UtcNow.AddHours(2),
+            Category = "Test category", 
+            Priority = Priority.High
         };
     }
 }

@@ -40,6 +40,8 @@ namespace Integration
             Assert.That(taskModel.CreatedUtc, Is.GreaterThan(DateTime.UtcNow.AddSeconds(-2)));
             Assert.That(taskModel.UpdatedUtc, Is.GreaterThan(DateTime.UtcNow.AddSeconds(-2)));
             Assert.That(taskModel.ExpirationUtc, Is.EqualTo(request.ExpirationUtc).Within(TimeSpan.FromSeconds(1)));
+            Assert.That(taskModel.Priority, Is.EqualTo(request.Priority));
+            Assert.That(taskModel.Category, Is.EqualTo(request.Category));
         }
 
         [Test]
@@ -70,7 +72,9 @@ namespace Integration
             {
                 Title = "Task updated",
                 Description = "Task description updated",
-                Status = TaskStatus.Processing
+                Status = TaskStatus.Processing,
+                Category = "Updated category",
+                Priority = Priority.Low,
             };
 
             // act
@@ -86,6 +90,8 @@ namespace Integration
             Assert.That(taskModel.CreatedUtc, Is.GreaterThan(DateTime.UtcNow.AddSeconds(-2)));
             Assert.That(taskModel.UpdatedUtc, Is.GreaterThan(DateTime.UtcNow.AddSeconds(-2)));
             Assert.That(taskModel.ExpirationUtc, Is.EqualTo(request.ExpirationUtc).Within(TimeSpan.FromSeconds(1)));
+            Assert.That(taskModel.Priority, Is.EqualTo(patchRequest.Priority));
+            Assert.That(taskModel.Category, Is.EqualTo(patchRequest.Category));
         }
 
         [Test]
@@ -127,16 +133,16 @@ namespace Integration
             // arrange
             await Client.Settings.SetJobSettingsAsync(new JobSettings()
             {
-                CheckTaskExpirationJobSec = 20,
+                CheckTaskExpirationJobSec = 5,
                 ReloadCachesJobSec = 50
             });
 
             var request = RequestsFactory.DefaultCreateTaskRequest();
-            request.ExpirationUtc = DateTime.UtcNow.AddMinutes(1);
+            request.ExpirationUtc = DateTime.UtcNow.AddSeconds(5);
             var task = await Client.Tasks.CreateAsync(request);
 
             // act
-            await Task.Delay(TimeSpan.FromSeconds(70));
+            await Task.Delay(TimeSpan.FromSeconds(15));
             var model = await Client.Tasks.GetByIdAsync(task.Id.Value);
 
             // assert

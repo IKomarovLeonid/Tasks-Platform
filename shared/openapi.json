@@ -306,12 +306,19 @@
             "type": "string",
             "nullable": true
           },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
           "description": {
             "type": "string",
             "nullable": true
           },
           "status": {
             "$ref": "#/components/schemas/TaskStatus"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/Priority"
           },
           "expirationUtc": {
             "type": "string",
@@ -358,6 +365,24 @@
           "Processed"
         ]
       },
+      "Priority": {
+        "type": "string",
+        "description": "",
+        "x-enumNames": [
+          "NotDefined",
+          "Urgent",
+          "High",
+          "Medium",
+          "Low"
+        ],
+        "enum": [
+          "NotDefined",
+          "Urgent",
+          "High",
+          "Medium",
+          "Low"
+        ]
+      },
       "VisibleScope": {
         "type": "string",
         "description": "",
@@ -378,6 +403,10 @@
             "type": "string",
             "nullable": true
           },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
           "description": {
             "type": "string",
             "nullable": true
@@ -386,6 +415,9 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "priority": {
+            "$ref": "#/components/schemas/Priority"
           }
         }
       },
@@ -409,6 +441,14 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "priority": {
+            "nullable": true,
+            "$ref": "#/components/schemas/Priority"
           }
         }
       }

@@ -9,7 +9,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220401070739_Initialize_Db")]
+    [Migration("20220413130200_Initialize_Db")]
     partial class Initialize_Db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,10 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Category")
+                        .HasColumnName("category")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedUtc")
                         .HasColumnName("created_utc")
@@ -40,6 +44,11 @@ namespace Persistence.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnName("priority")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
                         .IsRequired()

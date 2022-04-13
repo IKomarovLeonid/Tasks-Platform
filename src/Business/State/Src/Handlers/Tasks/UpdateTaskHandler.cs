@@ -31,6 +31,8 @@ namespace State.Handlers.Tasks
             if(request.Description != null) dto.Description = request.Description;
             if(request.ExpirationUtc.HasValue) dto.ExpirationUtc = request.ExpirationUtc.Value;
             if(request.Status.HasValue && request.Status.Value != TaskStatus.NotDefined) dto.Status = request.Status.Value;
+            if(request.Category != null) dto.Category = request.Category;
+            if(request.Priority.HasValue) dto.Priority = request.Priority.Value;
 
             var result = dto.Validate();
             if (!result.IsValid) return StateResult.Error(ErrorCode.TaskValidationFailure, result.Errors.First().ToString());

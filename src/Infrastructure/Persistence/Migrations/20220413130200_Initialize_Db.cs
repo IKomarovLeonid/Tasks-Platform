@@ -33,7 +33,9 @@ namespace Persistence.Migrations
                     title = table.Column<string>(nullable: false),
                     description = table.Column<string>(nullable: false),
                     status = table.Column<string>(nullable: false),
-                    expiration_utc = table.Column<DateTime>(nullable: true)
+                    expiration_utc = table.Column<DateTime>(nullable: true),
+                    category = table.Column<string>(nullable: true),
+                    priority = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

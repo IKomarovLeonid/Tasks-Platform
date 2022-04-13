@@ -17,6 +17,10 @@ namespace State.Commands.Tasks
 
         public DateTime? ExpirationUtc { get; set; }
 
+        public Priority? Priority { get; set; }
+
+        public string Category { get; set; }
+
         public UpdateTaskCommand() : base(nameof(UpdateTaskCommand)) { }
     }
 }

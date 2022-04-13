@@ -613,8 +613,10 @@ export class TaskViewModel implements ITaskViewModel {
     id?: number;
     state?: RootState;
     title?: string | undefined;
+    category?: string | undefined;
     description?: string | undefined;
     status?: TaskStatus;
+    priority?: Priority;
     expirationUtc?: string | undefined;
     createdUtc?: string;
     updatedUtc?: string;
@@ -633,8 +635,10 @@ export class TaskViewModel implements ITaskViewModel {
             this.id = _data["id"];
             this.state = _data["state"];
             this.title = _data["title"];
+            this.category = _data["category"];
             this.description = _data["description"];
             this.status = _data["status"];
+            this.priority = _data["priority"];
             this.expirationUtc = _data["expirationUtc"];
             this.createdUtc = _data["createdUtc"];
             this.updatedUtc = _data["updatedUtc"];
@@ -653,8 +657,10 @@ export class TaskViewModel implements ITaskViewModel {
         data["id"] = this.id;
         data["state"] = this.state;
         data["title"] = this.title;
+        data["category"] = this.category;
         data["description"] = this.description;
         data["status"] = this.status;
+        data["priority"] = this.priority;
         data["expirationUtc"] = this.expirationUtc;
         data["createdUtc"] = this.createdUtc;
         data["updatedUtc"] = this.updatedUtc;
@@ -673,8 +679,10 @@ export interface ITaskViewModel {
     id?: number;
     state?: RootState;
     title?: string | undefined;
+    category?: string | undefined;
     description?: string | undefined;
     status?: TaskStatus;
+    priority?: Priority;
     expirationUtc?: string | undefined;
     createdUtc?: string;
     updatedUtc?: string;
@@ -693,6 +701,14 @@ export enum TaskStatus {
     Processed = "Processed",
 }
 
+export enum Priority {
+    NotDefined = "NotDefined",
+    Urgent = "Urgent",
+    High = "High",
+    Medium = "Medium",
+    Low = "Low",
+}
+
 export enum VisibleScope {
     Active = "Active",
     All = "All",
@@ -700,8 +716,10 @@ export enum VisibleScope {
 
 export class CreateTaskRequestModel implements ICreateTaskRequestModel {
     title?: string | undefined;
+    category?: string | undefined;
     description?: string | undefined;
     expirationUtc?: string | undefined;
+    priority?: Priority;
 
     constructor(data?: ICreateTaskRequestModel) {
         if (data) {
@@ -715,8 +733,10 @@ export class CreateTaskRequestModel implements ICreateTaskRequestModel {
     init(_data?: any) {
         if (_data) {
             this.title = _data["title"];
+            this.category = _data["category"];
             this.description = _data["description"];
             this.expirationUtc = _data["expirationUtc"];
+            this.priority = _data["priority"];
         }
     }
 
@@ -730,8 +750,10 @@ export class CreateTaskRequestModel implements ICreateTaskRequestModel {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["title"] = this.title;
+        data["category"] = this.category;
         data["description"] = this.description;
         data["expirationUtc"] = this.expirationUtc;
+        data["priority"] = this.priority;
         return data;
     }
 
@@ -745,8 +767,10 @@ export class CreateTaskRequestModel implements ICreateTaskRequestModel {
 
 export interface ICreateTaskRequestModel {
     title?: string | undefined;
+    category?: string | undefined;
     description?: string | undefined;
     expirationUtc?: string | undefined;
+    priority?: Priority;
 }
 
 export class UpdateTaskRequestModel implements IUpdateTaskRequestModel {
@@ -754,6 +778,8 @@ export class UpdateTaskRequestModel implements IUpdateTaskRequestModel {
     description?: string | undefined;
     status?: TaskStatus | undefined;
     expirationUtc?: string | undefined;
+    category?: string | undefined;
+    priority?: Priority | undefined;
 
     constructor(data?: IUpdateTaskRequestModel) {
         if (data) {
@@ -770,6 +796,8 @@ export class UpdateTaskRequestModel implements IUpdateTaskRequestModel {
             this.description = _data["description"];
             this.status = _data["status"];
             this.expirationUtc = _data["expirationUtc"];
+            this.category = _data["category"];
+            this.priority = _data["priority"];
         }
     }
 
@@ -786,6 +814,8 @@ export class UpdateTaskRequestModel implements IUpdateTaskRequestModel {
         data["description"] = this.description;
         data["status"] = this.status;
         data["expirationUtc"] = this.expirationUtc;
+        data["category"] = this.category;
+        data["priority"] = this.priority;
         return data;
     }
 
@@ -802,6 +832,8 @@ export interface IUpdateTaskRequestModel {
     description?: string | undefined;
     status?: TaskStatus | undefined;
     expirationUtc?: string | undefined;
+    category?: string | undefined;
+    priority?: Priority | undefined;
 }
 
 export interface FileResponse {
@@ -812,6 +844,7 @@ export interface FileResponse {
 }
 
 export class SwaggerException extends Error {
+    message: string;
     status: number;
     response: string;
     headers: { [key: string]: any; };

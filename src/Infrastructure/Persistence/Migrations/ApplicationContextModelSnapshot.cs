@@ -23,6 +23,10 @@ namespace Persistence.Migrations
                         .HasColumnName("id")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Category")
+                        .HasColumnName("category")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CreatedUtc")
                         .HasColumnName("created_utc")
                         .HasColumnType("TEXT");
@@ -38,6 +42,11 @@ namespace Persistence.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnName("priority")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
                         .IsRequired()

@@ -12,5 +12,9 @@ namespace Core.API.View.Tasks
         public TaskStatus? Status { get; set; }
 
         public DateTime? ExpirationUtc { get; set; }
+
+        public string Category { get; set; }
+
+        public Priority? Priority { get; set; }
     }
 }

@@ -15,8 +15,10 @@ namespace Persistence.Configurations
 
             builder.Property(t => t.Title).IsRequired().HasColumnName("title");
             builder.Property(t => t.Description).IsRequired().HasColumnName("description");
+            builder.Property(t => t.Category).HasColumnName("category");
             builder.Property(t => t.State).IsRequired().HasColumnName("state").HasConversion(new EnumToStringConverter<RootState>());
             builder.Property(t => t.Status).IsRequired().HasColumnName("status").HasConversion(new EnumToStringConverter<TaskStatus>());
+            builder.Property(t => t.Priority).IsRequired().HasColumnName("priority").HasConversion(new EnumToStringConverter<Priority>());
 
             builder.Property(t => t.ExpirationUtc).HasColumnName("expiration_utc");
             builder.Property(t => t.CreatedUtc).IsRequired().HasColumnName("created_utc");

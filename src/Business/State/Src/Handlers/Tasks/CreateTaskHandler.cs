@@ -31,7 +31,9 @@ namespace State.Handlers.Tasks
                 ExpirationUtc = command.ExpirationUtc,
                 IsActive = true,
                 Status = TaskStatus.Pending,
-                State = RootState.Active
+                State = RootState.Active,
+                Priority = command.Priority,
+                Category = command.Category,
             };
 
             var result = dto.Validate();
