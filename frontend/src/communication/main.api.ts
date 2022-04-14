@@ -844,7 +844,7 @@ export interface FileResponse {
 }
 
 export class SwaggerException extends Error {
-    message: string;
+    override message: string;
     status: number;
     response: string;
     headers: { [key: string]: any; };

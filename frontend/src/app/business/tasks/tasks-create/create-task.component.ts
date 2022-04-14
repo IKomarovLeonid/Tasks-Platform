@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {CreateTaskRequestModel} from "../../../../communication/main.api";
+import {CreateTaskRequestModel, Priority} from "../../../../communication/main.api";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {TasksMediator} from "../../../state/tasks.mediator";
 import {MatDialogRef} from "@angular/material/dialog";
@@ -29,6 +29,29 @@ export class CreateTaskComponent{
       templateOptions: {
         label: 'What you are going to do?',
         required: true,
+      }
+    },
+    {
+      key: 'priority',
+      type: 'select',
+      templateOptions: {
+        label: 'Task priority',
+        required: true,
+        options: [
+          {label: 'Not defined', value: Priority.NotDefined },
+          {label: 'Urgent', value: Priority.Urgent },
+          {label: 'High', value: Priority.High},
+          {label: 'Medium', value: Priority.Medium},
+          {label: 'Low', value: Priority.Low}
+        ]
+      },
+    },
+    {
+      key: 'category',
+      type: 'input',
+      templateOptions: {
+        label: 'Category (optional)',
+        required: false,
       }
     },
     {

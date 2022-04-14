@@ -12,7 +12,7 @@ export class TaskProfileComponent implements OnInit{
 
   public model: TaskViewModel | undefined;
 
-  constructor(private mediator: TasksMediator, private route: ActivatedRoute, private ui: UiService) {
+  constructor(private mediator: TasksMediator, private route: ActivatedRoute, public readonly ui: UiService) {
   }
 
   ngOnInit() {

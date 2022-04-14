@@ -17,7 +17,7 @@ export class TasksViewComponent implements OnInit, AfterViewInit{
    public isLoading: boolean;
    public currentScope: VisibleScope;
    public dataSource = new MatTableDataSource<TaskViewModel>();
-   public displayedColumns = ['id', 'title', 'state', 'status', 'expirationUtc', 'updatedUtc', 'profile'];
+   public displayedColumns = ['id', 'title', 'priority' ,'state', 'status', 'expirationUtc', 'updatedUtc', 'profile'];
 
    constructor(
      private mediator: TasksMediator,
