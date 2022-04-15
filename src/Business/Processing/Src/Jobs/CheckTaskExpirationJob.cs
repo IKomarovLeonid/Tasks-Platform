@@ -24,7 +24,7 @@ namespace Processing.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            var tasks = await _storage.GetAllAsync(t => t.State == RootState.Active && t.ExpirationUtc.HasValue);
+            var tasks = await _storage.GetAllAsync(t => t.State == RootState.Active && t.ExpirationUtc.HasValue && t.Status != TaskStatus.Expired);
 
             if (tasks.Count == 0)
             {
