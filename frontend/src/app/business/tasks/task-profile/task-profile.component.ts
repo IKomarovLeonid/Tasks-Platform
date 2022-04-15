@@ -10,9 +10,11 @@ import {UiService} from "../../../services/ui/ui.service";
 })
 export class TaskProfileComponent implements OnInit{
 
+  public isLoading: boolean;
   public model: TaskViewModel | undefined;
 
   constructor(private mediator: TasksMediator, private route: ActivatedRoute, public readonly ui: UiService) {
+    this.isLoading = false;
   }
 
   ngOnInit() {
@@ -21,11 +23,34 @@ export class TaskProfileComponent implements OnInit{
       const response = await this.mediator.GetByIdAsync(+id!);
       if(response.isSuccess()) this.model = response.data !!;
       else{
-        console.log(response);
         const message = this.ui.parser.Parse(response.errorMessage);
         this.ui.notifications.Error(message);
         await this.ui.router.RedirectToHome();
       }
     })
+  }
+
+  async onRefresh(): Promise<void>{
+    this.isLoading = true;
+    const response = await this.mediator.GetByIdAsync(this.model?.id !!);
+    if(response.isSuccess()) this.model = response.data !!;
+    else{
+      const message = this.ui.parser.Parse(response.errorMessage);
+      this.ui.notifications.Error(message);
+      await this.ui.router.RedirectToHome();
+    }
+    this.isLoading = false;
+  }
+
+  async onArchive(): Promise<void>{
+    const response = await this.mediator.ArchiveAsync(this.model?.id !!);
+    if(response.isSuccess()) {
+      this.ui.notifications.Success();
+    }
+    else{
+      const message = this.ui.parser.Parse(response.errorMessage);
+      this.ui.notifications.Error(message);
+    }
+    await this.ui.router.RedirectToHome();
   }
 }

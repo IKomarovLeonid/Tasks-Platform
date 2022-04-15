@@ -1,14 +1,21 @@
-<div class = "task-profile-container">
-  <mat-toolbar class = "actions-bar">
-    <button mat-button color = "primary" (click)="ui.router.RedirectToHome()">Back</button>
-    <button mat-button color = "primary">Refresh</button>
-    <button mat-button color = "primary">Delete</button>
-  </mat-toolbar>
-  <div class = "description-container">
-
+<div class="profile">
+  <div class="profile-menu">
+    <mat-toolbar class = "actions-bar">
+      <button mat-button color = "primary" (click)="ui.router.RedirectToHome()">Back</button>
+      <button mat-button color = "primary" (click)="onRefresh()">Refresh</button>
+      <button mat-button color = "primary" (click)="onArchive()">Delete</button>
+    </mat-toolbar>
+    <mat-progress-bar mode="query" *ngIf="isLoading"></mat-progress-bar>
   </div>
-  <div class = "info-container">
+  <div class = "profile-content">
+    <div class = "profile-info">
 
+    </div>
+    <div class="description">
+
+    </div>
+    <div class="profile-info">
+
+    </div>
   </div>
-  <h1>Task profile component {{model?.id}}</h1>
 </div>

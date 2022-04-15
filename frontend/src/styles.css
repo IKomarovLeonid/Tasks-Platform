@@ -66,11 +66,33 @@ th.mat-header-cell {
   margin-left: auto;
 }
 
-.description-container{
-  max-width: 5%;
+.profile{
+
 }
 
-.task-profile-container{
-  font-size: 2rem;
-  color: black;
+.profile-content{
+  display: flex;
+  height: 75vh;
+}
+
+.description{
+  flex-grow: 1;
+  border-color: red;
+  border-style: solid;
+  border-width: 1px;
+  margin: 5px;
+  height: 100%;
+}
+
+.profile-info{
+  height: 100%;
+  width: 20%;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  margin: 5px;
+}
+
+.profile-menu{
+
 }
