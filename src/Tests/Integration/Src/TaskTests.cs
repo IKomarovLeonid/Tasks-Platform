@@ -68,12 +68,16 @@ namespace Integration
             var request = RequestsFactory.DefaultCreateTaskRequest();
             var task = await Client.Tasks.CreateAsync(request);
 
+            var title = Generator.GenerateString();
+            var description = Generator.GenerateString();
+            var category = Generator.GenerateString();
+
             var patchRequest = new UpdateTaskRequestModel()
             {
-                Title = "Task updated",
-                Description = "Task description updated",
+                Title = title,
+                Description = description,
                 Status = TaskStatus.Processing,
-                Category = "Updated category",
+                Category = category,
                 Priority = Priority.Low,
             };
 
@@ -124,6 +128,8 @@ namespace Integration
 
             // assert
             Assert.NotNull(model);
+            Assert.That(model.Status, Is.EqualTo(TaskStatus.Processed));
+            Assert.That(model.State, Is.EqualTo(RootState.Archived));
 
         }
 
