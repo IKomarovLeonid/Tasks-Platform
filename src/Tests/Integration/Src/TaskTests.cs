@@ -154,5 +154,30 @@ namespace Integration
             // assert
             Assert.That(model.Status, Is.EqualTo(TaskStatus.Expired));
         }
+
+        [Test]
+        public async Task System_NotApplyExpirationCheck_OnArchivedTask()
+        {
+            // arrange
+            await Client.Settings.SetJobSettingsAsync(new JobSettings()
+            {
+                CheckTaskExpirationJobSec = 5,
+                ReloadCachesJobSec = 50
+            });
+
+            var request = RequestsFactory.DefaultCreateTaskRequest();
+            request.ExpirationUtc = DateTime.UtcNow.AddSeconds(5);
+            var task = await Client.Tasks.CreateAsync(request);
+
+            // archive
+            await Client.Tasks.ArchiveAsync(task.Id.Value);
+
+            // act
+            await Task.Delay(TimeSpan.FromSeconds(15));
+            var model = await Client.Tasks.GetByIdAsync(task.Id.Value);
+
+            // assert
+            Assert.That(model.Status, Is.EqualTo(TaskStatus.Processed));
+        }
     }
 }
