@@ -1,6 +1,5 @@
 ﻿using System;
 using Environment.State;
-using MediatR;
 using Objects.Dto;
 
 namespace State.Commands.Tasks
