@@ -1,5 +1,4 @@
-﻿using System;
-using Bogus;
+﻿using Bogus;
 
 namespace Integration.Src.Helpers
 {

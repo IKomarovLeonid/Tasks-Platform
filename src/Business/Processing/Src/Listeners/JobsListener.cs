@@ -52,7 +52,7 @@ namespace Processing.Listeners
 
         private void OnUpdate(StateEvent<BaseSettings> stateEvent)
         {
-            _quartz.RestartJobsAsync();
+            _quartz.RestartJobsAsync().GetAwaiter().GetResult();
         }
     }
 }
