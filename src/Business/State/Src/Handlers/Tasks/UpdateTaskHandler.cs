@@ -27,7 +27,10 @@ namespace State.Handlers.Tasks
 
             if(dto == null) return StateResult.Error(ErrorCode.NotFound);
 
-            if(request.Title != null) dto.Title = request.Title;
+            // check state
+            if(!dto.IsActive) return StateResult.Error(ErrorCode.TaskArchived);
+
+            if (request.Title != null) dto.Title = request.Title;
             if(request.Description != null) dto.Description = request.Description;
             if(request.ExpirationUtc.HasValue) dto.ExpirationUtc = request.ExpirationUtc.Value;
             if(request.Status.HasValue && request.Status.Value != TaskStatus.NotDefined) dto.Status = request.Status.Value;

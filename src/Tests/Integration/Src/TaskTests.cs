@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Integration.Helpers;
 using NUnit.Framework;
@@ -201,6 +202,29 @@ namespace Integration
 
             // assert
             Assert.That(model.Status, Is.EqualTo(TaskStatus.Processed));
+        }
+
+        [Test]
+        public async Task User_CanNot_UpdateArchivedTask()
+        {
+            var request = RequestsFactory.DefaultCreateTaskRequest();
+            var task = await Client.Tasks.CreateAsync(request);
+
+            // archive
+            await Client.Tasks.ArchiveAsync(task.Id.Value);
+
+            // act
+            var newTitle = Generator.GenerateString();
+            var updateRequest = new UpdateTaskRequestModel()
+            {
+                Title = newTitle
+            };
+
+            Assert.ThrowsAsync<APIException>(async () => await Client.Tasks.PatchAsync(task.Id.Value, updateRequest));
+
+            var taskModel = await Client.Tasks.GetByIdAsync(task.Id.Value);
+
+            Assert.That(taskModel.Title, Is.EqualTo(request.Title));
         }
     }
 }
