@@ -92,6 +92,8 @@ namespace Core.API.Startup
 
         private void StartListeners()
         {
+            Logger.Info("Listeners will start...");
+
             using var scope = _scopeFactory.CreateScope();
 
             var listeners = scope.ServiceProvider.GetServices<IListener>();
@@ -100,6 +102,8 @@ namespace Core.API.Startup
             {
                 listener.Start();
             }
+
+            Logger.Info("Listeners has been started");
         }
     }
 }
