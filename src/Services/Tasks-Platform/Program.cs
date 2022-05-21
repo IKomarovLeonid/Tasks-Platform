@@ -14,6 +14,7 @@ namespace Tasks_Platform
 
         private static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
+            // TODO: custom host creation
             var baseUrl = ConfigurationReader.ReadConfig<ApplicationConfiguration>().Url;
             return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>().UseUrls(baseUrl);
         }
