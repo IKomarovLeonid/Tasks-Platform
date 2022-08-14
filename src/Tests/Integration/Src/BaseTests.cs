@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Integration.API;
 using Integration.Src.Helpers;
@@ -15,8 +16,11 @@ namespace Integration
         public async Task Setup()
         {
             Generator = new Generator();
-            Client = new APIConnection("http://localhost:8080");
-            
+
+            var url = Environment.GetEnvironmentVariable("Url") ?? "http://localhost:8080";
+
+            Client = new APIConnection(url);
+
             await Client.Healty.PingAsync();
         }
 
